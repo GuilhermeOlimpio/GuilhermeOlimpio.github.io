@@ -1,8 +1,657 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guilherme Olímpio Fagundes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .profile-section {
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav li {
+            margin: 0;
+        }
+
+        .nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav a:hover::before {
+            left: 100%;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .publication-item {
+            border-left: 4px solid #667eea;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .publication-item h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .publication-item .authors {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .publication-item .journal {
+            color: #34495e;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .publication-year {
+            position: absolute;
+            right: 1rem;
+            top: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .abstract {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #667eea;
+        }
+
+        .abstract p {
+            margin: 0;
+            text-align: justify;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .publication-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .citation {
+            background: #f1f3f4;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            border-left: 2px solid #ddd;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card h4 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .project-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-planning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+
+        .blog-post {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+
+        .blog-post h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-post .date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+            }
+            
+            .nav a {
+                padding: 0.75rem 1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
-</html>
-<!-- rebuild GitHub Pages -->
+    <div class="container">
+        <header class="header">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="assets/images/profile.jpg" alt="Guilherme Olímpio Fagundes">
+                </div>
+                <h1>Guilherme Olímpio Fagundes</h1>
+                <p>Sociology, Msc Student</p>
+                <div class="social-links">
+                    <a href="#" target="_blank">GitHub</a>
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="#" target="_blank">ORCID</a>
+                    <a href="#" target="_blank">ResearchGate</a>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav">
+            <ul>
+                <li><a href="#about" class="nav-link active">About Me</a></li>
+                <li><a href="#publications" class="nav-link">Publications</a></li>
+                <li><a href="#projects" class="nav-link">Ongoing Projects</a></li>
+                <li><a href="#code" class="nav-link">Code & Data</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#cv" class="nav-link">CV</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <section id="about" class="section active">
+                <h2>About Me</h2>
+                <div class="card">
+                    <p></p>
+                </div>
+
+                <h3>Formação Acadêmica</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="card">
+                            <h4>Sociology, Msc Student</h4>
+                            <p><strong>Universidade de São Paulo (USP)</strong> | 2024-2026</p>
+                            <p>Ongoing research about social inequalities in high tech industry in São José dos Campos, São Paulo state.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="card">
+                            <h4>Social Science, BA</h4>
+                            <p><strong>Universidade de São Paulo (USP)</strong> | 2019-2023</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Research Experience</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="card">
+                            <h4>Assistant Researcher</h4>
+                            <p><strong>Centro Brasileiro de Análise e Planejamento</strong> | 2022, 2025</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="publications" class="section">
+                <h2>Publications</h2>
+                <p style="margin-bottom: 2rem; color: #666;">Lista completa de publicações organizadas cronologicamente. Clique nos links para acessar os PDFs ou páginas das publicações.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="card publication-item">
+                            <div class="publication-year">2024</div>
+                            <h4>Interpretable Deep Learning Models for Automated Medical Diagnosis: A Comprehensive Framework</h4>
+                            <div class="authors">Santos, M. A.; <strong>Silva, J.</strong>; Rodriguez, P. L.; Chen, W.</div>
+                            <div class="journal">Nature Machine Intelligence, v. 8, n. 3, p. 245-267</div>
+                            <div class="abstract">
+                                <p>Este trabalho apresenta um framework abrangente para o desenvolvimento de modelos de deep learning interpretáveis aplicados ao diagnóstico médico automatizado. A metodologia proposta combina técnicas de attention mechanisms com explainable AI (XAI) para fornecer diagnósticos precisos e interpretáveis. Os resultados demonstram uma melhoria de 12% na precisão diagnóstica em comparação com métodos tradicionais, mantendo alta interpretabilidade para profissionais médicos.</p>
+                            </div>
+                            <div class="publication-actions">
+                                <a href="docs/papers/2024_nature_mi.pdf" class="btn" target="_blank">PDF</a>
+                                <a href="#" class="btn">DOI</a>
+                                <a href="#" class="btn">Código</a>
+                            </div>
+                            <div class="citation">Santos, M. A.; Silva, J.; Rodriguez, P. L.; Chen, W. (2024). Interpretable Deep Learning Models for Automated Medical Diagnosis: A Comprehensive Framework. <em>Nature Machine Intelligence</em>, 8(3), 245-267.</div>
+                        </div>
+                    </div>
+                  
+                <div class="card" style="margin-top: 2rem; text-align: center;">
+                    <h3>Métricas de Publicação</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div>
+                            <div style="font-size: 2rem; font-weight: bold; color: #667eea;">28</div>
+                            <div style="color: #666;">H-index</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem; font-weight: bold; color: #667eea;">1,847</div>
+                            <div style="color: #666;">Citações</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem; font-weight: bold; color: #667eea;">32</div>
+                            <div style="color: #666;">Publicações</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem; font-weight: bold; color: #667eea;">Q1</div>
+                            <div style="color: #666;">Principais Periódicos</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="section">
+                <h2>Ongoing Projects</h2>
+                
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h4>Gender inequalities in high-tech industr</h4>
+                        <span class="project-status status-active">Active</span>
+                        <p>Desenvolvimento de sistema de IA para auxílio no diagnóstico de doenças raras através de análise de imagens médicas. Colaboração com Hospital das Clínicas.</p>
+                        <p><strong>Financiamento:</strong> FAPESP nº 000000000</p>
+                        <p><strong>Período:</strong> 2024-2026</p>
+                        <a href="#" class="btn">Detalhes</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="code" class="section">
+                <h2>Code & Data</h2>
+                
+                <h3>Repositórios Open Source</h3>
+                
+                <div class="card">
+                    <h4>🔬 MedAI-Toolkit</h4>
+                    <p>Biblioteca Python para análise de imagens médicas usando deep learning. Inclui pré-processamento, augmentação e modelos pré-treinados.</p>
+                    <p><strong>Linguagem:</strong> Python | <strong>Stars:</strong> 1.2k | <strong>Forks:</strong> 340</p>
+                    <a href="#" class="btn">GitHub</a>
+                    <a href="#" class="btn">Documentação</a>
+                    <a href="#" class="btn">PyPI</a>
+                </div>
+
+                <div class="card">
+                    <h4>📚 EduRecommender</h4>
+                    <p>Sistema de recomendação educacional multi-modal implementado em TensorFlow. Inclui APIs REST e interface web.</p>
+                    <p><strong>Linguagem:</strong> Python, JavaScript | <strong>Stars:</strong> 856 | <strong>Forks:</strong> 234</p>
+                    <a href="#" class="btn">GitHub</a>
+                    <a href="#" class="btn">Demo</a>
+                    <a href="#" class="btn">Paper</a>
+                </div>
+
+                <h3>Datasets Públicos</h3>
+                
+                <div class="card">
+                    <h4>🏥 Brazilian Medical Images Dataset</h4>
+                    <p>Coleção de 50.000 imagens médicas anotadas de hospitais brasileiros, incluindo raios-X, tomografias e ressonâncias.</p>
+                    <p><strong>Tamanho:</strong> 15 GB | <strong>Licença:</strong> Creative Commons BY-NC-SA</p>
+                    <a href="#" class="btn">Download</a>
+                    <a href="#" class="btn">Documentação</a>
+                    <a href="#" class="btn">Benchmark</a>
+                </div>
+            </section>
+
+            <section id="blog" class="section">
+                <h2>Blog</h2>
+                
+                <div class="blog-post">
+                    <h4>Post1</h4>
+                    <div class="date">July 8, 2025</div>
+                    <p>Teste</p>
+                    <a href="#" class="btn">Ler mais</a>
+                </div>
+            </section>
+
+            <section id="cv" class="section">
+                <h2>Curriculum Vitae</h2>
+                
+                <div class="card">
+                    <h3>Resumo Profissional</h3>
+                    <p></p>
+                    
+                    <div style="margin-top: 2rem;">
+                        <a href="#" class="btn">Download CV Completo (PT)</a>
+                        <a href="#" class="btn">Download CV (EN)</a>
+                        <a href="#" class="btn">Currículo Lattes</a>
+                    </div>
+                </div>
+
+                <h3>Principais Conquistas</h3>
+                <div class="card">
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>🏆 <strong>Prêmio Jovem Pesquisador FAPESP</strong> (2023)</li>
+                        <li>📊 <strong>H-index: 28</strong> | <strong>Citações: 1.847</strong></li>
+                        <li>🎓 <strong>12 mestrados orientados</strong>, <strong>4 doutorados em andamento</strong></li>
+                        <li>💰 <strong>R$ 2.1 milhões</strong> em financiamentos obtidos</li>
+                        <li>🔬 <strong>3 patentes registradas</strong> no INPI</li>
+                        <li>👥 <strong>Revisor</strong> em 8 periódicos internacionais</li>
+                        <li>🌍 <strong>Colaborações</strong> com MIT, Stanford, e University of Toronto</li>
+                    </ul>
+                </div>
+
+                <h3>Prêmios e Reconhecimentos</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="card">
+                            <h4>Prêmio Jovem Pesquisador FAPESP</h4>
+                            <p><strong>2023</strong> - Reconhecimento pela excelência em pesquisa em IA aplicada à saúde</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="card">
+                            <h4>Best Paper Award -
