@@ -16,7 +16,7 @@
   />
 
   <h1>Guilherme Olímpio Fagundes</h1>
-  <p>Mestrando em Sociologia — USP</p>
+  <p>Mestrando pelo Programa de Pós-Graduação em Sociologia da Universidade de São Paulo</p>
 
   <nav>
     <a href="#about">Sobre</a>
@@ -41,32 +41,50 @@
       <h2>Pesquisa</h2>
     
       <div class="tabs">
-        <button class="tab-button active" data-tab="interests">Interesses</button>
-        <button class="tab-button" data-tab="projects">Projetos</button>
-        <button class="tab-button" data-tab="experience">Experiência</button>
+        <button class="tab-button active" data-tab="ongoing">Em andamento</button>
+        <button class="tab-button" data-tab="completed">Concluídos</button>
       </div>
     
-      <div class="tab-content active" id="interests">
+      <div class="tab-content active" id="ongoing">
         <ul>
-          <li>Desigualdades sociais no setor de alta tecnologia</li>
-          <li>Gênero, trabalho e tecnologia</li>
-          <li>Sociologia do trabalho</li>
+          <li>Desigualdades relacionais entre empreendedores de inovação em São José dos Campos (SP) (2024-2026)</li>
         </ul>
+        <p>
+          Financiamento FAPESP nº 2024/01767-8, nº 2025/15081-3. 
+        </p>
+        
       </div>
+
+    <section id="publications">
+        <h2>Publicações</h2>
+      
+        <article class="publication" data-tags="trabalho tecnologia">
+          <h3>Desigualdades de gênero e indústria de alta tecnologia</h3>
+          <p>
+            <em>Working paper</em>, 2025.
+          </p>
+          <span class="hashtags">#trabalho #tecnologia</span>
+        </article>
+      
+        <article class="publication" data-tags="trabalho">
+          <h3>Qualificação profissional e mercado de trabalho</h3>
+          <p>
+            Trabalho de conclusão de curso, 2023.
+          </p>
+          <span class="hashtags">#trabalho</span>
+        </article>
+        <!-- rede interativa -->
+        <h3>Rede de colaboração</h3>
+        <div id="network"></div>
+      </section>
+  
     
-      <div class="tab-content" id="projects">
+      <div class="tab-content" id="completed">
         <p>
           Pesquisa de mestrado sobre desigualdades de gênero
           na indústria de alta tecnologia em São José dos Campos.
         </p>
       </div>
-    
-      <div class="tab-content" id="experience">
-        <p>
-          Assistente de pesquisa no CEBRAP (2022).
-        </p>
-      </div>
-    </section>
 
 
     <section id="cv">
@@ -104,6 +122,79 @@
         .getElementById(button.dataset.tab)
         .classList.add("active");
     });
+  });
+</script>
+
+<script>
+  const people = [
+    { id: "p1", name: "Guilherme Olímpio Fagundes" },
+    { id: "p2", name: "Murillo Marschner" },
+    { id: "p3", name: "Carolina Bueno Stefani" }
+  ];
+
+  const publications = [
+    { id: "pub1", title: "Ensino médio para quê, para quem? Desigualdades sociais e expectativas de progressão educacional entre jovens no Brasil (2025)" },
+    { id: "pub2", title: "Como o trabalho docente é experienciado na educação 4.0? (2023)"}
+  ];
+
+  const links = [
+    { person: "p1", publication: "pub1" },
+    { person: "p2", publication: "pub1" },
+    { person: "p3", publication: "pub1" },
+    { person: "p1", publication: "pub2" }
+  ];
+
+  const svg = document.querySelector("#network svg");
+
+  const leftX = 150;
+  const rightX = 550;
+
+  people.forEach((p, i) => {
+    const y = 100 + i * 80;
+
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", leftX);
+    circle.setAttribute("cy", y);
+    circle.setAttribute("r", 8);
+    circle.setAttribute("class", "node person");
+
+    const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+    title.textContent = p.name;
+    circle.appendChild(title);
+
+    svg.appendChild(circle);
+    p.y = y;
+  });
+
+  publications.forEach((pub, i) => {
+    const y = 140 + i * 120;
+
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", rightX);
+    circle.setAttribute("cy", y);
+    circle.setAttribute("r", 8);
+    circle.setAttribute("class", "node publication");
+
+    const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+    title.textContent = pub.title;
+    circle.appendChild(title);
+
+    svg.appendChild(circle);
+    pub.y = y;
+  });
+
+  links.forEach(link => {
+    const person = people.find(p => p.id === link.person);
+    const pub = publications.find(p => p.id === link.publication);
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", leftX);
+    line.setAttribute("y1", person.y);
+    line.setAttribute("x2", rightX);
+    line.setAttribute("y2", pub.y);
+    line.setAttribute("class", "link");
+
+    svg.insertBefore(line, svg.firstChild);
   });
 </script>
 
