@@ -90,4 +90,28 @@ footer {
 .tab-content.active {
   display: block;
 }
+
+#network {
+  margin-top: 2rem;
+  border: 1px solid #ddd;
+  padding: 1rem;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.person {
+  fill: #0055aa;
+}
+
+.publication {
+  fill: #999;
+}
+
+.link {
+  stroke: #ccc;
+  stroke-width: 1;
+}
+
  
