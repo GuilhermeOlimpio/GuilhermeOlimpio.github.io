@@ -1,0 +1,59 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #222;
+  background: #fff;
+  line-height: 1.6;
+}
+
+header {
+  max-width: 800px;
+  margin: 3rem auto 2rem;
+  padding: 0 1rem;
+}
+
+header h1 {
+  margin-bottom: 0.2rem;
+}
+
+header p {
+  margin-top: 0;
+  color: #555;
+}
+
+nav {
+  margin-top: 1rem;
+}
+
+nav a {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: #0055aa;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+}
+
+footer {
+  max-width: 800px;
+  margin: 4rem auto 2rem;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
