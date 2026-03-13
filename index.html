@@ -23,35 +23,22 @@
       margin: 3rem auto 2rem;
       padding: 0 1rem;
     }
-    header h1 {
-      margin-bottom: 0.2rem;
-    }
-    header p {
-      margin-top: 0;
-      color: #555;
-    }
-    nav {
-      margin-top: 1rem;
-    }
+    header h1 { margin-bottom: 0.2rem; }
+    header p  { margin-top: 0; color: #555; }
+    nav { margin-top: 1rem; }
     nav a {
       margin-right: 1rem;
       text-decoration: none;
       color: #0055aa;
     }
-    nav a:hover {
-      text-decoration: underline;
-    }
+    nav a:hover { text-decoration: underline; }
     main {
       max-width: 800px;
       margin: 0 auto;
       padding: 0 1rem;
     }
-    section {
-      margin-bottom: 3rem;
-    }
-    h2 {
-      margin-bottom: 0.5rem;
-    }
+    section { margin-bottom: 3rem; }
+    h2 { margin-bottom: 0.5rem; }
     footer {
       max-width: 800px;
       margin: 4rem auto 2rem;
@@ -60,7 +47,7 @@
       color: #666;
     }
 
-    /* ── Tabs (shared by Pesquisas and Publicações) ── */
+    /* ── Tabs ── */
     .tabs {
       margin-bottom: 1rem;
       display: flex;
@@ -80,12 +67,8 @@
       border-bottom: 2px solid #0055aa;
       font-weight: 500;
     }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     /* ── Publications list ── */
     .pub-list {
@@ -105,17 +88,28 @@
       font-size: 0.88rem;
       white-space: nowrap;
     }
-    .pub-list li a.pub-link:hover {
-      text-decoration: underline;
+    .pub-list li a.pub-link:hover { text-decoration: underline; }
+    .pub-empty { color: #888; font-size: 0.95rem; }
+
+    /* ── Cursos ── */
+    .course-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
-    .pub-empty {
-      color: #888;
-      font-size: 0.95rem;
+    .course-list li {
+      margin-bottom: 0.9rem;
+      font-size: 0.97rem;
+      line-height: 1.6;
+      border-left: 2px solid #e0e0e0;
+      padding-left: 0.9rem;
     }
+    .course-list li strong { display: block; }
+    .course-list li span { color: #555; font-size: 0.9rem; }
 
     /* ── Network ── */
     #network {
-      margin-top: 2rem;
+      margin-top: 1rem;
       border: 1px solid #ddd;
       border-radius: 4px;
       overflow: hidden;
@@ -129,15 +123,116 @@
     }
     #net-svg.grabbing { cursor: grabbing; }
     .net-link {
-      stroke: #ccc;
+      stroke: #ddd;
       stroke-width: 1.5;
+      transition: stroke 0.15s, stroke-width 0.15s, opacity 0.15s;
     }
     .net-link.highlighted {
       stroke: #0055aa;
       stroke-width: 2.5;
     }
-    .net-node { cursor: grab; }
-    .net-node.grabbing { cursor: grabbing; }
+    .net-link.dimmed { opacity: 0.08; }
+
+    /* Node labels — hidden by default, shown on hover via JS */
+    .net-label-bg  { display: none; }
+    .net-label-txt { display: none; }
+    .net-node.hovered .net-label-bg,
+    .net-node.hovered .net-label-txt { display: block; }
+
+    /* Network filter bar */
+    #net-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem 1.2rem;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      font-size: 0.88rem;
+    }
+    #net-controls label { color: #444; }
+    #net-controls select {
+      font-size: 0.88rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 0.2rem 0.5rem;
+      background: #fff;
+      cursor: pointer;
+      color: #222;
+    }
+    #net-controls select:focus { outline: 2px solid #0055aa; }
+
+    /* Year slider row */
+    #year-slider-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+    }
+    #year-slider-row label { color: #444; white-space: nowrap; }
+    #year-display {
+      font-weight: 500;
+      color: #0055aa;
+      min-width: 2.8rem;
+      font-size: 0.88rem;
+    }
+    #filter-year {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: #ddd;
+      outline: none;
+      cursor: pointer;
+      accent-color: #0055aa;
+    }
+    #filter-year::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #0055aa;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px #0055aa;
+    }
+    #filter-year::-moz-range-thumb {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #0055aa;
+      cursor: pointer;
+      border: 2px solid #fff;
+    }
+    #play-btn {
+      font-size: 0.82rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 0.15rem 0.55rem;
+      background: #fff;
+      cursor: pointer;
+      color: #222;
+      white-space: nowrap;
+    }
+    #play-btn:hover { border-color: #0055aa; color: #0055aa; }
+    .color-key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      font-size: 0.82rem;
+      color: #555;
+      margin-top: 0.4rem;
+      align-items: center;
+    }
+    .color-key span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .color-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
     /* Tooltip */
     #net-tooltip {
       position: fixed;
@@ -148,7 +243,7 @@
       font-size: 0.82rem;
       color: #222;
       pointer-events: none;
-      max-width: 260px;
+      max-width: 280px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       display: none;
       z-index: 100;
@@ -165,28 +260,26 @@
 <body>
 
 <header>
-  <img
-    src="assets/images/profile.JPG"
-    alt="Guilherme Olímpio Fagundes"
-    class="profile-photo"
-  />
+  <img src="assets/images/profile.JPG" alt="Guilherme Olímpio Fagundes" class="profile-photo" />
   <h1>Guilherme Olímpio Fagundes</h1>
   <p>Mestrando pelo Programa de Pós-Graduação em Sociologia da Universidade de São Paulo</p>
   <nav>
     <a href="#about">Sobre</a>
     <a href="#research">Pesquisas</a>
     <a href="#publications">Publicações</a>
+    <a href="#courses">Ensino</a>
     <a href="#cv">CV</a>
     <a href="#contact">Contato</a>
   </nav>
 </header>
 
 <main>
+
   <!-- ── Sobre ── -->
   <section id="about">
     <h2>Sobre</h2>
     <p>
-      Mestrando do Programa de Pós-Graduação em Sociologia (2024-2025) da Universidade de São Paulo (USP) com projeto sobre estruturas de desigualdade e empreendedorismo de base tecnológica, com período de estágio no exterior no Laboratoire d'Économie et de Sociologie du Travail (LEST) do CNRS, na França. Graduado em Ciências Sociais (bacharelado e licenciatura) pela USP. É sub-coordenador do Eixo Métodos do Laboratório de Pesquisa Social (LAPS) (2025-2026). Desde a iniciação científica é pesquisador dos grupos Sociologia Digital e Inteligência Artificial, a qual realizou pesquisas sobre os efeitos sociais da IA no âmbito do Center for Artificial Intelligence (C4AI/USP), e Mobilidades: Teoria, Temas e Métodos (MTTM), sobre a mobilidade de políticas de cidade inteligente (smart cities). Também coordenou o periódico Primeiros Estudos: Revista de Ciências Sociais (USP) entre 2022 a 2025. Tem interesse nos temas: estratificação social; sociologia econômica do desenvolvimento e das organizações; estudos sociais da ciência e tecnologia; metodologia e epistemologia. E-mail: guilherme.olimpio@usp.br ou gui.olimpiofagundes@gmail.com
+      Mestrando do Programa de Pós-Graduação em Sociologia (2024–2025) da Universidade de São Paulo (USP) com projeto sobre estruturas de desigualdade e empreendedorismo de base tecnológica, com período de estágio no exterior no Laboratoire d'Économie et de Sociologie du Travail (LEST) do CNRS, na França. Graduado em Ciências Sociais (bacharelado e licenciatura) pela USP. É sub-coordenador do Eixo Métodos do Laboratório de Pesquisa Social (LAPS) (2025–2026). Desde a iniciação científica é pesquisador dos grupos Sociologia Digital e Inteligência Artificial, a qual realizou pesquisas sobre os efeitos sociais da IA no âmbito do Center for Artificial Intelligence (C4AI/USP), e Mobilidades: Teoria, Temas e Métodos (MTTM), sobre a mobilidade de políticas de cidade inteligente (smart cities). Também coordenou o periódico <em>Primeiros Estudos: Revista de Ciências Sociais</em> (USP) entre 2022 a 2025. Tem interesse nos temas: estratificação social; sociologia econômica do desenvolvimento e das organizações; estudos sociais da ciência e tecnologia; metodologia e epistemologia. E-mail: guilherme.olimpio@usp.br ou gui.olimpiofagundes@gmail.com
     </p>
   </section>
 
@@ -197,19 +290,17 @@
       <button class="tab-button active" data-tab="ongoing">Em andamento</button>
       <button class="tab-button"        data-tab="completed">Concluídos</button>
     </div>
-
     <div class="tab-content active" id="ongoing">
       <ul>
-        <li>Desigualdades relacionais entre empreendedores de inovação em São José dos Campos (SP) (2024–2026)</li>
+        <li>Estruturas de desigualdade em processos de inovação em São José dos Campos (2024-2026)</li>
       </ul>
       <p>Financiamento FAPESP nº 2024/01767-8, nº 2025/15081-3.</p>
     </div>
-
     <div class="tab-content" id="completed">
-      <p>
-        Pesquisa de mestrado sobre desigualdades de gênero
-        na indústria de alta tecnologia em São José dos Campos.
-      </p>
+      <ul>
+        <li>Mercados digitais de trabalho: ciência, educação e cidades (2020-2023)</li>
+      </ul>
+      <p>Financiamentos FUSP #3541, CNPq 2021-1509</p>
     </div>
   </section>
 
@@ -224,74 +315,65 @@
       <button class="tab-button"        data-tab="pub-thesis">Tese e dissertação</button>
     </div>
 
-    <!-- Working papers -->
     <div class="tab-content active" id="pub-working">
       <p class="pub-empty">Nenhum working paper no momento.</p>
     </div>
 
-    <!-- No prelo -->
     <div class="tab-content" id="pub-prelo">
       <ul class="pub-list">
         <li>
           Fagundes, Guilherme Olímpio, Mauricio Piatti Lages. 2026.
-          "Mobilidades em rede: aproximações teórico-metodológicas entre análise de redes e mobilities studies"
+          "Mobilidades em rede: aproximações teórico-metodológicas entre análise de redes e mobilities studies."
           In: <em>Mobilidades: Teoria, Temas e Métodos</em>, editado por Bianca Freire-Medeiros, Apoena Mano e Mauricio Piatti Lages. Blucher.
         </li>
       </ul>
     </div>
 
-    <!-- Publicados -->
     <div class="tab-content" id="pub-published">
       <ul class="pub-list">
         <li>
           Fagundes, Guilherme Olímpio, Murillo Marschner, e Carolina Bueno Stefani. 2025.
           "Ensino médio para quê, para quem? Desigualdades sociais e expectativas de progressão educacional entre jovens no Brasil."
-          In: Expansão educacional, desigualdades e estratificação social: Do desenvolvimento infantil ao mercado de trabalho. EdiPUCRS.
+          In: <em>Expansão educacional, desigualdades e estratificação social: Do desenvolvimento infantil ao mercado de trabalho</em>. EdiPUCRS.
           <a class="pub-link" href="https://editora.pucrs.br/livro/1832/" target="_blank" rel="noopener">→ Acessar</a>
+          <a class="pub-link" href="https://github.com/GuilhermeOlimpio/Origens-sociais-e-expectativas" target="_blank" rel="noopener">→ Códigos</a>
         </li>
-        
         <li>
           Fagundes, Guilherme Olímpio, Camila Corvisier, Henrique Assi Hernandes, Tales Mançano, e Caio Labate. 2024.
-          "Por uma sociologia do vínculo social: entrevista com o sociólogo Serge Paugam".
-          <em>Revista Primeiros Estudos</em> 11, e00115001-e00115001.
+          "Por uma sociologia do vínculo social: entrevista com o sociólogo Serge Paugam."
+          <em>Revista Primeiros Estudos</em> 11, e00115001.
           <a class="pub-link" href="https://revistas.usp.br/primeirosestudos/article/download/232184/210398" target="_blank" rel="noopener">→ Acessar</a>
         </li>
-
         <li>
           Fagundes, Guilherme Olímpio, Guilherme Tannus Guerra Silva, e Glória Maria de Carvalho. 2024.
-          "Vala de Perus como trauma cultural: Memória coletiva, performances culturais e movimentos sociais".
-          <em>Perspectivas Sociais</em> 10 (1), 80-107
+          "Vala de Perus como trauma cultural: Memória coletiva, performances culturais e movimentos sociais."
+          <em>Perspectivas Sociais</em> 10 (1): 80–107.
           <a class="pub-link" href="https://revistas.ufpel.edu.br/index.php/percsoc/article/download/26868/20036" target="_blank" rel="noopener">→ Acessar</a>
         </li>
-        
         <li>
-          Fagundes, Guilherme Olímpio, Henrique Assi Hernandes, e Tales Mançano 2024.
-          "Novas perspectivas sobre W.E.B Du Bois e sociologia pública: Uma conversa com Michael Burawoy".
-          <em>Primeiros Estudos</em> 11, 00115002-00115002
+          Fagundes, Guilherme Olímpio, Henrique Assi Hernandes, e Tales Mançano. 2024.
+          "Novas perspectivas sobre W.E.B Du Bois e sociologia pública: Uma conversa com Michael Burawoy."
+          <em>Primeiros Estudos</em> 11, 00115002.
           <a class="pub-link" href="https://revistas.usp.br/primeirosestudos/article/download/233275/211625" target="_blank" rel="noopener">→ Acessar</a>
         </li>
-              
         <li>
           Fagundes, Guilherme Olímpio. 2023.
           "Como o trabalho docente é experienciado na educação 4.0?"
-          <em>Revista Três Pontos</em> 20 (1): 6-12.
+          <em>Revista Três Pontos</em> 20 (1): 6–12.
           <a class="pub-link" href="https://periodicos.ufmg.br/index.php/revistatrespontos/article/view/49337/39592" target="_blank" rel="noopener">→ Acessar</a>
         </li>
-
         <li>
           Fagundes, Guilherme Olímpio. 2023.
-          "Funcionalismo"
+          "Funcionalismo."
           <em>Enciclopédia de Antropologia da USP</em>.
           <a class="pub-link" href="http://ea.fflch.usp.br/correntes/funcionalismo" target="_blank" rel="noopener">→ Acessar</a>
         </li>
-
         <li>
           Fagundes, Guilherme Olímpio, Camila Monteiro Corvisier, Henrique Assi Hernandes, João Pedro Gomes Balanco, Lucas de Paula Fonseca, Tales Mançano, Bruna Gisi. 2023.
-          "Entrevista com Bruna Gisi"
+          "Entrevista com Bruna Gisi."
           <em>Revista Três Pontos</em> 10 (2).
           <a class="pub-link" href="https://revistas.usp.br/primeirosestudos/article/download/211404/194012" target="_blank" rel="noopener">→ Acessar</a>
         </li>
-
         <li>
           Fagundes, Guilherme Olímpio, Camila Monteiro Corvisier, Elisa Fernandes, Hannah Ramos, João Pedro Gomes Balanco. 2023.
           "Onde está a imaginação sociológica para pensar a desindustrialização?"
@@ -301,26 +383,110 @@
       </ul>
     </div>
 
-    <!-- Tese e dissertação -->
     <div class="tab-content" id="pub-thesis">
-      <p class="pub-empty">Nenhuma tese ou dissertação no momento. Depósito da dissertação em outubro de 2026. </p>
+      <p class="pub-empty">Nenhuma tese ou dissertação no momento. Depósito da dissertação em outubro de 2026.</p>
     </div>
 
-    <!-- Rede bipartite interativa -->
+    <!-- ── Rede de colaboração ── -->
     <h3 style="margin-top:2.5rem;">Rede de colaboração em publicações</h3>
-    <p style="font-size:0.9rem;color:#555;margin-top:0;">
-      Passe o cursor sobre um nó para destacar suas conexões. Arraste para reorganizar.
-      <span style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;">
-        <svg width="10" height="10"><circle cx="5" cy="5" r="5" fill="#0055aa"/></svg> Autores
-      </span>
-      <span style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;">
-        <svg width="10" height="10"><circle cx="5" cy="5" r="5" fill="#888"/></svg> Publicações
-      </span>
+
+    <div id="net-controls">
+      <div id="year-slider-row">
+        <label for="filter-year">Ano:</label>
+        <input type="range" id="filter-year" min="2020" max="2026" step="1" value="2026" />
+        <span id="year-display">2026</span>
+        <button id="play-btn">▶ Animar</button>
+      </div>
+
+      <label for="color-mode">Colorir por:</label>
+      <select id="color-mode">
+        <option value="type">Tipo (autor / publicação)</option>
+        <option value="gender">Gênero do autor</option>
+      </select>
+    </div>
+
+    <div class="color-key" id="color-key">
+      <span><span class="color-dot" style="background:#0055aa"></span> Autores</span>
+      <span><span class="color-dot" style="background:#888"></span> Publicações</span>
+    </div>
+
+    <p style="font-size:0.85rem;color:#777;margin:0.4rem 0 0;">
+      Passe o cursor sobre um nó para ver o nome. Arraste para reorganizar.
     </p>
+
     <div id="network">
-      <svg id="net-svg" viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" style="height:420px"></svg>
+      <svg id="net-svg" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
     <div id="net-tooltip"></div>
+  </section>
+
+  <!-- ── Ensino ── -->
+  <section id="courses">
+    <h2>Ensino</h2>
+    <div class="tabs" id="courses-tabs">
+      <button class="tab-button active" data-tab="courses-workshops">Oficinas</button>
+      <button class="tab-button"        data-tab="courses-courses">Cursos</button>
+    </div>
+
+    <div class="tab-content active" id="courses-workshops">
+      <ul class="course-list">
+        <li>
+          <strong>Análise de redes pessoais: teoria e método</strong>
+          <span>Universidade de São Paulo · São Paulo (presencial) · Outono 2026</span>
+          <a class="pub-link" href="https://github.com/GuilhermeOlimpio/nome-da-pasta" target="_blank" rel="noopener">→ Acessar</a>
+          <a class="pub-link" href="https://github.com/GuilhermeOlimpio/nome-da-pasta/tree/main/dados" target="_blank" rel="noopener">→ Dados</a>
+        </li>
+      </ul>
+    </div>
+       
+    <div class="tab-content" id="courses-courses">
+      <ul class="course-list">        
+        <li>
+          <strong>Métodos e técnicas de pesquisa em ciências sociais: o documental, o presencial e o digital</strong>
+          <span>Com Bruno Vieira Borges, Júlia Rodrigues Barros Alves e Victória Henrique Ribeiro</span>
+          <span>Universidade de São Paulo · São Paulo (online) · Verão 2026</span>
+        </li>
+        <li>
+          <strong>Programando a sociedade: Trabalho, Inteligência Artificial e outras tecnologias</strong>
+          <span>Com Marcus Repa, Júlia Rodrigues Barros Alves, Diego Gonçalves e Antônio Olegário</span>
+          <span>Universidade de São Paulo · São Paulo (online) · Inverno 2025</span>
+        </li>
+        <li>
+          <strong>AI Tá On: A pesquisa em IA no Brasil</strong>
+          <span>Com Glória Maria de Carvalho</span>
+          <span>Universidade de São Paulo · São Paulo (online) · Verão 2025</span>
+          <a class="pub-link" href="https://www.youtube.com/watch?v=6K7NCYWlZoo&pp=ygUVc2VtaW90YWxrcyAgQUkgVMOBIE9O" target="_blank" rel="noopener">→ Acessar</a>
+        </li>
+        <li>
+          <strong>IA e Estado</strong>
+          <span>Com Catarina Ianni Segatto, Mateus Henrique Amorim e João Ricardo Penteado</span>
+          <span>Universidade de São Paulo · São Paulo (online) · Verão 2025</span>
+        </li>
+      </ul>
+
+      <!-- Modelo para adicionar uma oficina:
+      <ul class="course-list">
+        <li>
+          <strong>Programando a sociedade: Trabalho, Inteligência Artificial e outras tecnologias</strong>
+          <span>Universidade de São Paulo · São Paulo (online) · 2025</span>
+          <a class="pub-link" href="https://github.com/GuilhermeOlimpio/nome-da-pasta" target="_blank" rel="noopener">→ Acessar</a>
+          <a class="pub-link" href="https://github.com/GuilhermeOlimpio/nome-da-pasta/tree/main/dados" target="_blank" rel="noopener">→ Dados</a>
+        </li>
+      </ul>
+      -->
+
+      
+    </div>
+    
+    <div class="tab-content" id="courses-courses">
+      <ul class="course-list">
+        <li>
+          <strong>Nome do curso</strong>
+          <span>Instituição · Local · Ano</span>
+        </li>
+      </ul>
+    </div>
+    
   </section>
 
   <!-- ── CV ── -->
@@ -338,21 +504,20 @@
       <li><a href="https://www.linkedin.com/in/gofagundes/">LinkedIn</a></li>
     </ul>
   </section>
+
 </main>
 
 <footer>
   <p>© 2026 Guilherme Olímpio Fagundes</p>
 </footer>
 
-<!-- ── Tab logic (generic: works for any .tabs group) ── -->
+<!-- ── Tab logic ── -->
 <script>
   document.querySelectorAll(".tabs").forEach(tabGroup => {
     tabGroup.querySelectorAll(".tab-button").forEach(btn => {
       btn.addEventListener("click", () => {
         tabGroup.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-
-        // find sibling tab-contents: they follow the .tabs div in the same section
         const section = tabGroup.closest("section") || tabGroup.parentElement;
         section.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
         section.querySelector("#" + btn.dataset.tab).classList.add("active");
@@ -361,228 +526,325 @@
   });
 </script>
 
-<!-- ── ForceAtlas2-style network with drag + dynamic label placement ── -->
+<!-- ── Network ── -->
 <script>
 (function () {
 
-  // ── DATA ────────────────────────────────────────────────────────────────
-  // Rede egocentrada: Guilherme (ego) é implícito — apenas coautores e publicações.
+  // ── DATA ─────────────────────────────────────────────────────────────────
+  // gender: "m" = masc, "f" = fem, "?" = desconhecido
   const people = [
-    { id: "p2", name: "Murillo Marschner",      shortName: "Marschner", type: "person" },
-    { id: "p3", name: "Carolina Bueno Stefani", shortName: "Stefani",   type: "person" },
-    { id: "p4", name: "Guilherme Tannus Guerra Silva", shortName: "Guerra",   type: "person" },
-    { id: "p5", name: "Glória Maria de Carvalho", shortName: "Carvalho",   type: "person" },
-    { id: "p6", name: "Gabriel Akira Kato", shortName: "Kato",   type: "person" },
-    { id: "p7", name: "João Pedro Gomes Balanco", shortName: "Balanco",   type: "person" },
-    { id: "p8", name: "João Victor Magalhães de Almeida", shortName: "Magalhães",   type: "person" },
-    { id: "p9", name: "Camila Corvisier", shortName: "Corvisier",   type: "person" },
-    { id: "p10", name: "Henrique Assi Hernandes", shortName: "Hernandes",   type: "person" },
-    { id: "p11", name: "Tales Mançano", shortName: "Mançano",   type: "person" },
-    { id: "p12", name: "Caio Labate", shortName: "Labate",   type: "person" },
-    { id: "p13", name: "Lucas de Paula Fonseca", shortName: "Fonseca",   type: "person" },
-    { id: "p14", name: "Bruna Gisi", shortName: "Gisi",   type: "person" },
-    { id: "p15", name: "Serge Paugam", shortName: "Paugam",   type: "person" },
-    { id: "p16", name: "Michael Burawoy", shortName: "Burawoy",   type: "person" },
-    { id: "p17", name: "Elisa Fernandes", shortName: "Fernandes",   type: "person" },
-    { id: "p18", name: "Hannah Ramos", shortName: "Ramos",   type: "person" },
-    { id: "p19", name: "Mauricio Piatti Lages", shortName: "Lages",   type: "person" },
+    { id: "p2",  name: "Murillo Marschner",               shortName: "Marschner",  type: "person", gender: "m" },
+    { id: "p3",  name: "Carolina Bueno Stefani",           shortName: "Stefani",    type: "person", gender: "f" },
+    { id: "p4",  name: "Guilherme Tannus Guerra Silva",    shortName: "Guerra",     type: "person", gender: "m" },
+    { id: "p5",  name: "Glória Maria de Carvalho",         shortName: "Carvalho",   type: "person", gender: "f" },
+    { id: "p6",  name: "Gabriel Akira Kato",               shortName: "Kato",       type: "person", gender: "m" },
+    { id: "p7",  name: "João Pedro Gomes Balanco",         shortName: "Balanco",    type: "person", gender: "m" },
+    { id: "p8",  name: "João Victor Magalhães de Almeida", shortName: "Magalhães",  type: "person", gender: "m" },
+    { id: "p9",  name: "Camila Corvisier",                 shortName: "Corvisier",  type: "person", gender: "f" },
+    { id: "p10", name: "Henrique Assi Hernandes",          shortName: "Hernandes",  type: "person", gender: "m" },
+    { id: "p11", name: "Tales Mançano",                    shortName: "Mançano",    type: "person", gender: "m" },
+    { id: "p12", name: "Caio Labate",                      shortName: "Labate",     type: "person", gender: "m" },
+    { id: "p13", name: "Lucas de Paula Fonseca",           shortName: "Fonseca",    type: "person", gender: "m" },
+    { id: "p14", name: "Bruna Gisi",                       shortName: "Gisi",       type: "person", gender: "f" },
+    { id: "p15", name: "Serge Paugam",                     shortName: "Paugam",     type: "person", gender: "m" },
+    { id: "p16", name: "Michael Burawoy",                  shortName: "Burawoy",    type: "person", gender: "m" },
+    { id: "p17", name: "Elisa Fernandes",                  shortName: "Fernandes",  type: "person", gender: "f" },
+    { id: "p18", name: "Hannah Ramos",                     shortName: "Ramos",      type: "person", gender: "f" },
+    { id: "p19", name: "Mauricio Piatti Lages",            shortName: "Lages",      type: "person", gender: "m" },
   ];
+
   const pubs = [
-    { id: "pub1", name: "Ensino médio para quê, para quem? Desigualdades sociais e expectativas de progressão educacional entre jovens no Brasil (2025)", shortName: "Ensino médio… (2025)",   type: "pub" },
-    { id: "pub2", name: "Como o trabalho docente é experienciado na educação 4.0? (2023)", shortName: "Trabalho docente (2023)",    type: "pub" },
-    { id: "pub3", name: "Por uma sociologia do vínculo social: entrevista com o sociólogo Serge Paugam (2024)",        shortName: "Entrevista com Paugam (2024)", type: "pub" },
-    { id: "pub4", name: "Vala de Perus como trauma cultural: Memória coletiva, performances culturais e movimentos sociais (2024)",        shortName: "Vala de Perus (2024)", type: "pub" },
-    { id: "pub5", name: "Novas perspectivas sobre W.E.B Du Bois e sociologia pública: Uma conversa com Michael Burawoy (2024)",        shortName: "Entrevista com Burawoy (2024)", type: "pub" },
-    { id: "pub6", name: "Funcionalismo (2023)",        shortName: "Funcionalismo (2023)", type: "pub" },
-    { id: "pub7", name: "Entrevista com Bruna Gisi (2023)",        shortName: "Entrevista com Gisi (2023)", type: "pub" },
-    { id: "pub8", name: "Onde está a imaginação sociológica para pensar a desindustrialização? (2023)",        shortName: "Desindustrialização (2023)", type: "pub" },
-    { id: "pub9", name: "Eduardo Galvão (2020)",        shortName: "Eduardo Galvão (2020)", type: "pub" },
-    { id: "pub10", name: "Mobilidades em rede: aproximações teórico-metodológicas entre análise de redes e mobilities studies (2026)",        shortName: "Mobilidades em rede (2026)", type: "pub" },
+    { id: "pub1",  year: 2025, shortName: "Ensino médio… (2025)",        name: "Ensino médio para quê, para quem? (2025)",                                                        type: "pub" },
+    { id: "pub2",  year: 2023, shortName: "Trabalho docente (2023)",      name: "Como o trabalho docente é experienciado na educação 4.0? (2023)",                                 type: "pub" },
+    { id: "pub3",  year: 2024, shortName: "Entrevista Paugam (2024)",     name: "Por uma sociologia do vínculo social: entrevista com Serge Paugam (2024)",                        type: "pub" },
+    { id: "pub4",  year: 2024, shortName: "Vala de Perus (2024)",         name: "Vala de Perus como trauma cultural (2024)",                                                       type: "pub" },
+    { id: "pub5",  year: 2024, shortName: "Entrevista Burawoy (2024)",    name: "Novas perspectivas sobre W.E.B Du Bois e sociologia pública: conversa com Michael Burawoy (2024)", type: "pub" },
+    { id: "pub6",  year: 2023, shortName: "Funcionalismo (2023)",         name: "Funcionalismo (2023)",                                                                            type: "pub" },
+    { id: "pub7",  year: 2023, shortName: "Entrevista Gisi (2023)",       name: "Entrevista com Bruna Gisi (2023)",                                                                type: "pub" },
+    { id: "pub8",  year: 2023, shortName: "Desindustrialização (2023)",   name: "Onde está a imaginação sociológica para pensar a desindustrialização? (2023)",                    type: "pub" },
+    { id: "pub9",  year: 2020, shortName: "Eduardo Galvão (2020)",        name: "Eduardo Galvão (2020)",                                                                           type: "pub" },
+    { id: "pub10", year: 2026, shortName: "Mobilidades em rede (2026)",   name: "Mobilidades em rede: análise de redes e mobilities studies (2026)",                              type: "pub" },
   ];
-  // Arestas apenas entre coautores e publicações (o ego é implícito)
+
   const edgeDefs = [
-    { source: "p2", target: "pub1" },
-    { source: "p3", target: "pub1" },
-    { source: "p9", target: "pub3" },
-    { source: "p10", target: "pub3" },
-    { source: "p11", target: "pub3" },
-    { source: "p12", target: "pub3" },
-    { source: "p4", target: "pub4" },
-    { source: "p5", target: "pub4" },
-    { source: "p10", target: "pub5" },
-    { source: "p11", target: "pub5" },
-    { source: "p16", target: "pub5" },
-    { source: "p15", target: "pub3" },
-    { source: "p9", target: "pub7" },
-    { source: "p10", target: "pub7" },
-    { source: "p11", target: "pub7" },
-    { source: "p7", target: "pub7" },
-    { source: "p13", target: "pub7" },
-    { source: "p14", target: "pub7" },
-    { source: "p7", target: "pub8" },
-    { source: "p17", target: "pub8" },
-    { source: "p18", target: "pub8" },
-    { source: "p9", target: "pub8" },
-    { source: "p6", target: "pub9" },
-    { source: "p7", target: "pub9" },
-    { source: "p8", target: "pub9" },
+    { source: "p2",  target: "pub1"  },
+    { source: "p3",  target: "pub1"  },
+    { source: "p9",  target: "pub3"  },
+    { source: "p10", target: "pub3"  },
+    { source: "p11", target: "pub3"  },
+    { source: "p12", target: "pub3"  },
+    { source: "p15", target: "pub3"  },
+    { source: "p4",  target: "pub4"  },
+    { source: "p5",  target: "pub4"  },
+    { source: "p10", target: "pub5"  },
+    { source: "p11", target: "pub5"  },
+    { source: "p16", target: "pub5"  },
+    { source: "p9",  target: "pub7"  },
+    { source: "p10", target: "pub7"  },
+    { source: "p11", target: "pub7"  },
+    { source: "p7",  target: "pub7"  },
+    { source: "p13", target: "pub7"  },
+    { source: "p14", target: "pub7"  },
+    { source: "p7",  target: "pub8"  },
+    { source: "p17", target: "pub8"  },
+    { source: "p18", target: "pub8"  },
+    { source: "p9",  target: "pub8"  },
+    { source: "p6",  target: "pub9"  },
+    { source: "p7",  target: "pub9"  },
+    { source: "p8",  target: "pub9"  },
     { source: "p19", target: "pub10" },
   ];
 
+  // ── COLOR PALETTES ───────────────────────────────────────────────────────
+  const COLOR = {
+    type: { person: "#0055aa", pub: "#888" },
+    gender: { m: "#0055aa", f: "#c2185b", "?": "#888", pub: "#ccc" }
+  };
+
+  const KEY_LABELS = {
+    type:   [
+      { color: "#0055aa", label: "Autores",      shape: "circle" },
+      { color: "#888",    label: "Publicações",   shape: "square" }
+    ],
+    gender: [
+      { color: "#0055aa", label: "Masculino",        shape: "circle" },
+      { color: "#c2185b", label: "Feminino",          shape: "circle" },
+      { color: "#ccc",    label: "Publicações",   shape: "square" }
+    ]
+  };
+
   // ── SETUP ────────────────────────────────────────────────────────────────
-  const W = 700, H = 440;
+  const W = 700, H = 500;
   const NS  = "http://www.w3.org/2000/svg";
   const svg = document.getElementById("net-svg");
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   svg.style.height = H + "px";
   const tooltip = document.getElementById("net-tooltip");
 
-  const nodes = [...people, ...pubs].map((d, i) => {
+  // Build full node list (all nodes, always in DOM)
+  const allNodes = [...people, ...pubs].map((d, i) => {
     const angle = (i / (people.length + pubs.length)) * 2 * Math.PI;
-    const r = 130 + Math.random() * 30;
-    return { ...d, x: W/2 + r * Math.cos(angle), y: H/2 + r * Math.sin(angle), vx: 0, vy: 0, pinned: false };
+    const r = 140 + Math.random() * 30;
+    return { ...d, x: W/2 + r * Math.cos(angle), y: H/2 + r * Math.sin(angle), vx: 0, vy: 0, pinned: false, active: true };
   });
 
   const nodeById = {};
-  nodes.forEach(n => nodeById[n.id] = n);
+  allNodes.forEach(n => nodeById[n.id] = n);
 
-  const edges = edgeDefs.map(e => ({ source: nodeById[e.source], target: nodeById[e.target] }));
+  const allEdges = edgeDefs.map(e => ({
+    source: nodeById[e.source],
+    target: nodeById[e.target],
+    active: true
+  }));
 
-  const degree = {};
-  nodes.forEach(n => degree[n.id] = 0);
-  edges.forEach(e => { degree[e.source.id]++; degree[e.target.id]++; });
+  // Fixed radius for all nodes — NOT scaled by degree (req. 4)
+  const NODE_R = 8;
 
-  // ── SVG HELPERS ──────────────────────────────────────────────────────────
+  // ── SVG LAYERS ───────────────────────────────────────────────────────────
   function svgEl(tag, attrs) {
     const e = document.createElementNS(NS, tag);
-    Object.entries(attrs).forEach(([k,v]) => e.setAttribute(k, v));
+    Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
     return e;
   }
 
   const linkLayer = svgEl("g", {}); svg.appendChild(linkLayer);
   const nodeLayer = svgEl("g", {}); svg.appendChild(nodeLayer);
 
-  // Edge elements
-  const linkEls = edges.map(e => {
-    const line = svgEl("line", { class: "net-link", "data-source": e.source.id, "data-target": e.target.id });
+  // ── EDGE ELEMENTS ────────────────────────────────────────────────────────
+  const linkEls = allEdges.map(e => {
+    const line = svgEl("line", { class: "net-link" });
     linkLayer.appendChild(line);
-    return { el: line, source: e.source, target: e.target };
+    return { el: line, edge: e };
   });
 
-  // Node elements: circle + background rect + label text
+  // ── NODE ELEMENTS ────────────────────────────────────────────────────────
   const nodeGroups = {};
-  nodes.forEach(n => {
-    const nr = 7 + degree[n.id] * 2;
-    const g  = svgEl("g", { class: `net-node ${n.type}`, "data-id": n.id, style: "cursor:grab" });
+  allNodes.forEach(n => {
+    const g = svgEl("g", { class: `net-node ${n.type}`, "data-id": n.id, style: "cursor:grab" });
 
-    const circle = svgEl("circle", {
-      r: nr,
-      fill: n.type === "person" ? "#0055aa" : "#888",
-      stroke: "#fff", "stroke-width": "2"
-    });
+    // Publications get a square, people get a circle
+    const circle = n.type === "pub"
+      ? svgEl("rect", { x: -NODE_R, y: -NODE_R, width: NODE_R*2, height: NODE_R*2, stroke: "#fff", "stroke-width": "2", rx: "2" })
+      : svgEl("circle", { r: NODE_R, stroke: "#fff", "stroke-width": "2" });
     g.appendChild(circle);
 
-    // White pill background for label (drawn before text so text sits on top)
-    const bg = svgEl("rect", {
-      rx: "3", ry: "3",
-      fill: "rgba(255,255,255,0.88)",
-      "pointer-events": "none"
-    });
+    // Label background (hidden unless hovered)
+    const bg = svgEl("rect", { rx: "3", ry: "3", class: "net-label-bg", fill: "rgba(255,255,255,0.92)", "pointer-events": "none" });
     g.appendChild(bg);
 
     const txt = svgEl("text", {
+      class: "net-label-txt",
       "font-size": "11",
       fill: "#222",
       "font-family": "system-ui, sans-serif",
-      "pointer-events": "none",
-      "paint-order": "stroke",
-      stroke: "rgba(255,255,255,0.0)",
-      "stroke-width": "0"
+      "pointer-events": "none"
     });
     txt.textContent = n.shortName;
     g.appendChild(txt);
 
     nodeLayer.appendChild(g);
-    nodeGroups[n.id] = { g, circle, bg, txt, r: nr };
+    nodeGroups[n.id] = { g, circle, bg, txt };
   });
 
-  // ── LABEL POSITIONING ────────────────────────────────────────────────────
-  // 8 candidate angles (in radians), we pick the one pointing away from neighbours
-  const CANDIDATES = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, -3*Math.PI/4, -Math.PI/2, -Math.PI/4];
-  const LABEL_DIST = 6; // gap between circle edge and label
-  const LABEL_H    = 14;
+  // ── COLOR UPDATE ─────────────────────────────────────────────────────────
+  function applyColors(mode) {
+    allNodes.forEach(n => {
+      const { circle } = nodeGroups[n.id];
+      let c;
+      if (mode === "gender") {
+        c = n.type === "pub" ? COLOR.gender.pub : (COLOR.gender[n.gender] || COLOR.gender["?"]);
+      } else {
+        c = COLOR.type[n.type];
+      }
+      circle.setAttribute("fill", c);
+    });
 
-  function bestLabelAngle(n) {
-    // Compute mean direction toward neighbours (nodes sharing an edge)
+    // Update legend
+    const keyEl = document.getElementById("color-key");
+    keyEl.innerHTML = KEY_LABELS[mode].map(k => {
+      const sh = k.shape === "square"
+        ? `<span class="color-dot" style="background:${k.color};border-radius:2px"></span>`
+        : `<span class="color-dot" style="background:${k.color}"></span>`;
+      return `<span>${sh} ${k.label}</span>`;
+    }).join("");
+  }
+
+  // ── YEAR FILTER ──────────────────────────────────────────────────────────
+  function applyYearFilter(maxYear) {
+    allNodes.forEach(n => {
+      if (n.type === "pub") {
+        n.active = (maxYear === "all" || n.year <= parseInt(maxYear));
+      }
+    });
+    // A person node is active if it has at least one active edge
+    allNodes.forEach(n => {
+      if (n.type === "person") {
+        n.active = allEdges.some(e => e.source.id === n.id && e.target.active);
+      }
+    });
+    allEdges.forEach(e => {
+      e.active = e.source.active && e.target.active;
+    });
+
+    // Show/hide elements
+    allNodes.forEach(n => {
+      nodeGroups[n.id].g.style.display = n.active ? "" : "none";
+    });
+    linkEls.forEach(l => {
+      l.el.style.display = l.edge.active ? "" : "none";
+    });
+
+    // Restart sim
+    running = true; frameCount = 0; tick();
+  }
+
+  const KA = 0.06, KR = 6000, KG = 0.010, DAMP = 0.82;
+  let running = true, frameCount = 0;
+
+  // ── CONTROLS ─────────────────────────────────────────────────────────────
+  const sliderEl  = document.getElementById("filter-year");
+  const displayEl = document.getElementById("year-display");
+  const playBtn   = document.getElementById("play-btn");
+
+  const YEARS = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
+  let animTimer = null;
+
+  function setYear(yr) {
+    sliderEl.value  = yr;
+    displayEl.textContent = yr;
+    applyYearFilter(yr);
+  }
+
+  sliderEl.addEventListener("input", e => {
+    stopAnim();
+    setYear(parseInt(e.target.value));
+  });
+
+  function stopAnim() {
+    if (animTimer) { clearInterval(animTimer); animTimer = null; }
+    playBtn.textContent = "▶ Animar";
+  }
+
+  playBtn.addEventListener("click", () => {
+    if (animTimer) { stopAnim(); return; }
+    // Start from earliest year
+    let idx = 0;
+    setYear(YEARS[idx]);
+    playBtn.textContent = "⏹ Parar";
+    animTimer = setInterval(() => {
+      idx++;
+      if (idx >= YEARS.length) { stopAnim(); return; }
+      setYear(YEARS[idx]);
+    }, 1400);
+  });
+
+  document.getElementById("color-mode").addEventListener("change", e => {
+    applyColors(e.target.value);
+  });
+
+  // Init: show all years, default colors
+  setYear(2026);
+  applyColors("type");
+
+  // ── LABEL PLACEMENT (on hover only) ──────────────────────────────────────
+  const CANDIDATES = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, -3*Math.PI/4, -Math.PI/2, -Math.PI/4];
+  const LABEL_DIST = 6, LABEL_H = 14;
+
+  function positionLabel(n) {
+    const { bg, txt } = nodeGroups[n.id];
+
+    // Compute best angle: away from active neighbours and nearby nodes
     let sumX = 0, sumY = 0, count = 0;
-    edges.forEach(e => {
+    allEdges.forEach(e => {
+      if (!e.active) return;
       let other = null;
       if (e.source.id === n.id) other = e.target;
       if (e.target.id === n.id) other = e.source;
       if (other) { sumX += other.x - n.x; sumY += other.y - n.y; count++; }
     });
-    // Also push away from other nodes that are close
-    nodes.forEach(m => {
-      if (m.id === n.id) return;
+    allNodes.forEach(m => {
+      if (m.id === n.id || !m.active) return;
       const dx = m.x - n.x, dy = m.y - n.y;
       const d = Math.sqrt(dx*dx + dy*dy);
-      if (d < 120) { sumX += dx / d * 60; sumY += dy / d * 60; count++; }
+      if (d < 100) { sumX += dx/d * 50; sumY += dy/d * 50; count++; }
     });
 
-    if (count === 0) return -Math.PI / 2; // default: above
-
-    // Mean direction toward crowd → label goes opposite
-    const crowdAngle = Math.atan2(sumY, sumX);
+    const crowdAngle = count ? Math.atan2(sumY, sumX) : 0;
     const awayAngle  = crowdAngle + Math.PI;
-
-    // Pick closest candidate
     let best = CANDIDATES[0], bestDiff = Infinity;
     CANDIDATES.forEach(c => {
       let diff = Math.abs(c - awayAngle);
-      if (diff > Math.PI) diff = 2 * Math.PI - diff;
+      if (diff > Math.PI) diff = 2*Math.PI - diff;
       if (diff < bestDiff) { bestDiff = diff; best = c; }
     });
-    return best;
-  }
 
-  function updateLabels() {
-    nodes.forEach(n => {
-      const { bg, txt, r } = nodeGroups[n.id];
-      const angle = bestLabelAngle(n);
+    let tw = 80;
+    try { tw = txt.getComputedTextLength() + 8; } catch(_) {}
 
-      // Measure text width after it's in the DOM
-      let tw = 80; // fallback
-      try { tw = txt.getComputedTextLength() + 6; } catch(e) {}
-      const th = LABEL_H;
+    const lx = (NODE_R + LABEL_DIST) * Math.cos(best);
+    const ly = (NODE_R + LABEL_DIST) * Math.sin(best);
 
-      const dist = r + LABEL_DIST;
-      const lx   = dist * Math.cos(angle);
-      const ly   = dist * Math.sin(angle);
+    let anchor = "middle";
+    if (Math.cos(best) > 0.4)      anchor = "start";
+    else if (Math.cos(best) < -0.4) anchor = "end";
 
-      // Anchor text so it doesn't go outside SVG
-      let anchor = "middle";
-      if (Math.cos(angle) > 0.4)       anchor = "start";
-      else if (Math.cos(angle) < -0.4)  anchor = "end";
+    txt.setAttribute("x", lx);
+    txt.setAttribute("y", ly);
+    txt.setAttribute("dy", "0.35em");
+    txt.setAttribute("text-anchor", anchor);
 
-      txt.setAttribute("x", lx);
-      txt.setAttribute("y", ly);
-      txt.setAttribute("dy", "0.35em");
-      txt.setAttribute("text-anchor", anchor);
+    let bx = lx - tw/2;
+    if (anchor === "start") bx = lx - 2;
+    if (anchor === "end")   bx = lx - tw + 2;
 
-      // Position background rect behind text
-      let bx = lx - tw / 2;
-      if (anchor === "start") bx = lx - 2;
-      if (anchor === "end")   bx = lx - tw + 2;
-
-      bg.setAttribute("x",      bx);
-      bg.setAttribute("y",      ly - th / 2);
-      bg.setAttribute("width",  tw);
-      bg.setAttribute("height", th);
-    });
+    bg.setAttribute("x",      bx);
+    bg.setAttribute("y",      ly - LABEL_H/2);
+    bg.setAttribute("width",  tw);
+    bg.setAttribute("height", LABEL_H);
   }
 
   // ── TOOLTIP ──────────────────────────────────────────────────────────────
-  function showTooltip(evt, html) {
+  function showTT(evt, html) {
     tooltip.innerHTML = html;
     tooltip.style.display = "block";
     moveTT(evt);
@@ -595,39 +857,53 @@
 
   // ── HIGHLIGHT ────────────────────────────────────────────────────────────
   function resetHL() {
-    linkEls.forEach(l => l.el.classList.remove("highlighted"));
-    nodes.forEach(n => nodeGroups[n.id].circle.setAttribute("opacity", 1));
+    linkEls.forEach(l => { l.el.classList.remove("highlighted"); l.el.classList.remove("dimmed"); });
+    allNodes.forEach(n => { nodeGroups[n.id].circle.setAttribute("opacity", 1); });
   }
   function highlight(id) {
-    nodes.forEach(n => nodeGroups[n.id].circle.setAttribute("opacity", 0.2));
-    linkEls.forEach(l => l.el.classList.remove("highlighted"));
+    allNodes.forEach(n => nodeGroups[n.id].circle.setAttribute("opacity", 0.18));
+    linkEls.forEach(l => l.el.classList.add("dimmed"));
+
     nodeGroups[id].circle.setAttribute("opacity", 1);
     linkEls.forEach(l => {
-      if (l.source.id === id || l.target.id === id) {
+      if (!l.edge.active) return;
+      if (l.edge.source.id === id || l.edge.target.id === id) {
+        l.el.classList.remove("dimmed");
         l.el.classList.add("highlighted");
-        const other = l.source.id === id ? l.target.id : l.source.id;
+        const other = l.edge.source.id === id ? l.edge.target.id : l.edge.source.id;
         nodeGroups[other].circle.setAttribute("opacity", 1);
       }
     });
   }
 
   // ── HOVER ────────────────────────────────────────────────────────────────
-  nodes.forEach(n => {
+  allNodes.forEach(n => {
     const { g } = nodeGroups[n.id];
+
     g.addEventListener("mouseenter", evt => {
       if (dragging) return;
+      g.classList.add("hovered");
+      positionLabel(n);
       highlight(n.id);
+
       let list;
       if (n.type === "person") {
-        list = edges.filter(e => e.source.id === n.id).map(e => `<li>${e.target.shortName}</li>`).join("");
-        showTooltip(evt, `<span class="tt-role">Autor</span><strong>${n.name}</strong><ul style="margin:4px 0 0 14px;padding:0;font-size:0.78rem;">${list}</ul>`);
+        list = allEdges.filter(e => e.active && e.source.id === n.id)
+          .map(e => `<li>${e.target.shortName}</li>`).join("");
+        showTT(evt, `<span class="tt-role">Autor</span><strong>${n.name}</strong>`
+          + (list ? `<ul style="margin:4px 0 0 14px;padding:0;font-size:0.78rem;">${list}</ul>` : ""));
       } else {
-        list = edges.filter(e => e.target.id === n.id).map(e => `<li>${e.source.name}</li>`).join("");
-        showTooltip(evt, `<span class="tt-role">Publicação</span><strong>${n.name}</strong><ul style="margin:4px 0 0 14px;padding:0;font-size:0.78rem;">${list}</ul>`);
+        list = allEdges.filter(e => e.active && e.target.id === n.id)
+          .map(e => `<li>${e.source.name}</li>`).join("");
+        showTT(evt, `<span class="tt-role">Publicação</span><strong>${n.name}</strong>`
+          + (list ? `<ul style="margin:4px 0 0 14px;padding:0;font-size:0.78rem;">${list}</ul>` : ""));
       }
     });
     g.addEventListener("mousemove", moveTT);
-    g.addEventListener("mouseleave", () => { if (!dragging) hideTT(); });
+    g.addEventListener("mouseleave", () => {
+      g.classList.remove("hovered");
+      if (!dragging) hideTT();
+    });
   });
 
   // ── DRAG ─────────────────────────────────────────────────────────────────
@@ -640,7 +916,7 @@
     return { x: (cx - rect.left) * (W / rect.width), y: (cy - rect.top) * (H / rect.height) };
   }
 
-  nodes.forEach(n => {
+  allNodes.forEach(n => {
     const { g } = nodeGroups[n.id];
     function onDown(evt) {
       evt.preventDefault();
@@ -655,7 +931,6 @@
 
   window.addEventListener("mousemove", evt => {
     if (!dragging) return;
-    evt.preventDefault();
     const pt = svgPt(evt);
     dragging.x = pt.x - dragOffX; dragging.y = pt.y - dragOffY;
     dragging.vx = 0; dragging.vy = 0;
@@ -679,61 +954,54 @@
   window.addEventListener("mouseup",  releaseNode);
   window.addEventListener("touchend", releaseNode);
 
-  // ── FORCE SIMULATION ────────────────────────────────────────────────────
-  const KA = 0.07, KR = 5500, KG = 0.012, DAMP = 0.84;
-  let running = true, frameCount = 0;
+  // ── FORCE SIMULATION ─────────────────────────────────────────────────────
+
+  function activeNodes() { return allNodes.filter(n => n.active); }
+  function activeEdges() { return allEdges.filter(e => e.active); }
 
   function forceStep() {
-    nodes.forEach(n => { n.fx = 0; n.fy = 0; });
+    const ns = activeNodes();
+    const es = activeEdges();
+    ns.forEach(n => { n.fx = 0; n.fy = 0; });
 
-    // Repulsion
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i+1; j < nodes.length; j++) {
-        const a = nodes[i], b = nodes[j];
+    for (let i = 0; i < ns.length; i++) {
+      for (let j = i+1; j < ns.length; j++) {
+        const a = ns[i], b = ns[j];
         let dx = a.x - b.x, dy = a.y - b.y;
         const d2 = Math.max(dx*dx + dy*dy, 1);
-        const d  = Math.sqrt(d2);
-        const f  = KR / d2;
+        const d  = Math.sqrt(d2), f = KR / d2;
         a.fx += f*dx/d; a.fy += f*dy/d;
         b.fx -= f*dx/d; b.fy -= f*dy/d;
       }
     }
-
-    // Attraction
-    edges.forEach(e => {
+    es.forEach(e => {
       const dx = e.target.x - e.source.x, dy = e.target.y - e.source.y;
-      const d  = Math.sqrt(dx*dx + dy*dy) || 1;
-      const f  = KA * d;
+      const d  = Math.sqrt(dx*dx + dy*dy) || 1, f = KA * d;
       e.source.fx += f*dx/d; e.source.fy += f*dy/d;
       e.target.fx -= f*dx/d; e.target.fy -= f*dy/d;
     });
+    ns.forEach(n => { n.fx += KG*(W/2 - n.x); n.fy += KG*(H/2 - n.y); });
 
-    // Gravity
-    nodes.forEach(n => { n.fx += KG*(W/2-n.x); n.fy += KG*(H/2-n.y); });
-
-    // Integrate
     let maxV = 0;
-    nodes.forEach(n => {
+    ns.forEach(n => {
       if (n.pinned) return;
       n.vx = (n.vx + n.fx) * DAMP;
       n.vy = (n.vy + n.fy) * DAMP;
-      n.x  = Math.max(40, Math.min(W-40, n.x + n.vx));
+      n.x  = Math.max(30, Math.min(W-30, n.x + n.vx));
       n.y  = Math.max(30, Math.min(H-30, n.y + n.vy));
       maxV = Math.max(maxV, Math.abs(n.vx) + Math.abs(n.vy));
     });
     return maxV;
   }
 
-  // ── RENDER ───────────────────────────────────────────────────────────────
   function render() {
     linkEls.forEach(l => {
-      l.el.setAttribute("x1", l.source.x); l.el.setAttribute("y1", l.source.y);
-      l.el.setAttribute("x2", l.target.x); l.el.setAttribute("y2", l.target.y);
+      l.el.setAttribute("x1", l.edge.source.x); l.el.setAttribute("y1", l.edge.source.y);
+      l.el.setAttribute("x2", l.edge.target.x); l.el.setAttribute("y2", l.edge.target.y);
     });
-    nodes.forEach(n => {
+    allNodes.forEach(n => {
       nodeGroups[n.id].g.setAttribute("transform", `translate(${n.x},${n.y})`);
     });
-    updateLabels();
   }
 
   function tick() {
@@ -741,7 +1009,7 @@
     const maxV = forceStep();
     render();
     frameCount++;
-    if (maxV > 0.08 || frameCount < 250) requestAnimationFrame(tick);
+    if (maxV > 0.08 || frameCount < 280) requestAnimationFrame(tick);
     else running = false;
   }
 
@@ -750,8 +1018,5 @@
 })();
 </script>
 
-</body>
-</html>
-  
 </body>
 </html>
