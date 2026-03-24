@@ -1035,10 +1035,7 @@
 
   tick();
 
-  if (markers.length > 0) {
-  const group = L.featureGroup(markers);
-  map.fitBounds(group.getBounds().pad(0.2));
-  }
+
 
 })();
 </script>
@@ -1083,38 +1080,44 @@
 
   let markers = [];
 
-  function render() {
-    markers.forEach(m => map.removeLayer(m));
-    markers = [];
+function render() {
+  markers.forEach(m => map.removeLayer(m));
+  markers = [];
 
-    const selectedYear = yearSelect.value;
-    const selectedType = typeSelect.value;
+  const selectedYear = yearSelect.value;
+  const selectedType = typeSelect.value;
 
-    events
-      .filter(e => selectedYear === 'all' || e.year == selectedYear)
-      .filter(e => selectedType === 'all' || e.type == selectedType)
-      .forEach(e => {
+  events
+    .filter(e => selectedYear === 'all' || e.year == selectedYear)
+    .filter(e => selectedType === 'all' || e.type == selectedType)
+    .forEach(e => {
 
-        const marker = L.circleMarker([e.lat, e.lng], {
+      const marker = L.circleMarker([e.lat, e.lng], {
         radius: 6,
         fillColor: colors[e.type] || "#888",
         color: "#fff",
         weight: 1,
         fillOpacity: 0.9
-        }).addTo(map);
+      }).addTo(map);
 
-        marker.bindPopup(`
-          <strong>${e.name}</strong><br/>
-          <em>${e.type} · ${e.year}</em><br/>
-          ${e.location}<br/>
-          ${e.description || ""}
-        `);
+      marker.bindPopup(`
+        <strong>${e.name}</strong><br/>
+        <em>${e.type} · ${e.year}</em><br/>
+        ${e.location}<br/>
+        ${e.description || ""}
+      `);
 
-        marker.bindTooltip(e.name);
-        
-        markers.push(marker);
-      });
+      marker.bindTooltip(e.name);
+
+      markers.push(marker);
+    });
+
+  // ✅ AGORA NO LUGAR CERTO
+  if (markers.length > 0) {
+    const group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.2));
   }
+}
 
   yearSelect.addEventListener('change', render);
   typeSelect.addEventListener('change', render);
