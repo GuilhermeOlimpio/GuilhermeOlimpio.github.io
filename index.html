@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <title>Guilherme Olímpio Fagundes</title>
   <style>
     body {
@@ -1032,6 +1034,92 @@
   }
 
   tick();
+
+  if (markers.length > 0) {
+  const group = L.featureGroup(markers);
+  map.fitBounds(group.getBounds().pad(0.2));
+  }
+
+})();
+</script>
+
+<script>
+(async function () {
+
+  const colors = {
+  "conferência": "#0055aa",
+  "oficina": "#2e7d32",
+  "apresentação": "#c62828"
+  };
+  
+  const map = L.map('map').setView([20, 0], 2);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  const res = await fetch('events.json');
+  const events = await res.json();
+
+  const yearSelect = document.getElementById('event-year');
+  const typeSelect = document.getElementById('event-type');
+
+  const years = [...new Set(events.map(e => e.year))].sort();
+  const types = [...new Set(events.map(e => e.type))].sort();
+
+  years.forEach(y => {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    yearSelect.appendChild(opt);
+  });
+
+  types.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t;
+    opt.textContent = t;
+    typeSelect.appendChild(opt);
+  });
+
+  let markers = [];
+
+  function render() {
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
+
+    const selectedYear = yearSelect.value;
+    const selectedType = typeSelect.value;
+
+    events
+      .filter(e => selectedYear === 'all' || e.year == selectedYear)
+      .filter(e => selectedType === 'all' || e.type == selectedType)
+      .forEach(e => {
+
+        const marker = L.circleMarker([e.lat, e.lng], {
+        radius: 6,
+        fillColor: colors[e.type] || "#888",
+        color: "#fff",
+        weight: 1,
+        fillOpacity: 0.9
+        }).addTo(map);
+
+        marker.bindPopup(`
+          <strong>${e.name}</strong><br/>
+          <em>${e.type} · ${e.year}</em><br/>
+          ${e.location}<br/>
+          ${e.description || ""}
+        `);
+
+        marker.bindTooltip(e.name);
+        
+        markers.push(marker);
+      });
+  }
+
+  yearSelect.addEventListener('change', render);
+  typeSelect.addEventListener('change', render);
+
+  render();
 
 })();
 </script>
