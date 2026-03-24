@@ -8,7 +8,7 @@ body {
 }
 
 .profile-photo {
-  width: 120px;
+  width: 200px;
   border-radius: 4px;
   margin-bottom: 1rem;
 }
@@ -114,4 +114,24 @@ footer {
   stroke-width: 1;
 }
 
+#map {
+  height: 420px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+#map-controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+#map-controls select {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0.2rem 0.4rem;
+}
  
