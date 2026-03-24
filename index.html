@@ -3,260 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <title>Guilherme Olímpio Fagundes</title>
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #222;
-      background: #fff;
-      line-height: 1.6;
-    }
-    .profile-photo {
-      width: 120px;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-    }
-    header {
-      max-width: 800px;
-      margin: 3rem auto 2rem;
-      padding: 0 1rem;
-    }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 0; color: #222; background: #fff; line-height: 1.6; }
+    .profile-photo { width: 120px; border-radius: 4px; margin-bottom: 1rem; }
+    header { max-width: 800px; margin: 3rem auto 2rem; padding: 0 1rem; }
     header h1 { margin-bottom: 0.2rem; }
     header p  { margin-top: 0; color: #555; }
     nav { margin-top: 1rem; }
-    nav a {
-      margin-right: 1rem;
-      text-decoration: none;
-      color: #0055aa;
-    }
+    nav a { margin-right: 1rem; text-decoration: none; color: #0055aa; }
     nav a:hover { text-decoration: underline; }
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
+    main { max-width: 800px; margin: 0 auto; padding: 0 1rem; }
     section { margin-bottom: 3rem; }
     h2 { margin-bottom: 0.5rem; }
-    footer {
-      max-width: 800px;
-      margin: 4rem auto 2rem;
-      padding: 0 1rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
+    footer { max-width: 800px; margin: 4rem auto 2rem; padding: 0 1rem; font-size: 0.9rem; color: #666; }
 
-    /* ── Tabs ── */
-    .tabs {
-      margin-bottom: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-    }
-    .tab-button {
-      background: none;
-      border: none;
-      font-size: 1rem;
-      margin-right: 1.2rem;
-      padding: 0.3rem 0;
-      cursor: pointer;
-      color: #0055aa;
-    }
-    .tab-button.active {
-      border-bottom: 2px solid #0055aa;
-      font-weight: 500;
-    }
+    .tabs { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0; }
+    .tab-button { background: none; border: none; font-size: 1rem; margin-right: 1.2rem; padding: 0.3rem 0; cursor: pointer; color: #0055aa; }
+    .tab-button.active { border-bottom: 2px solid #0055aa; font-weight: 500; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* ── Publications list ── */
-    .pub-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .pub-list li {
-      margin-bottom: 1.1rem;
-      font-size: 0.97rem;
-      line-height: 1.65;
-    }
-    .pub-list li a.pub-link {
-      margin-left: 0.4rem;
-      color: #0055aa;
-      text-decoration: none;
-      font-size: 0.88rem;
-      white-space: nowrap;
-    }
+    .pub-list { list-style: none; padding: 0; margin: 0; }
+    .pub-list li { margin-bottom: 1.1rem; font-size: 0.97rem; line-height: 1.65; }
+    .pub-list li a.pub-link { margin-left: 0.4rem; color: #0055aa; text-decoration: none; font-size: 0.88rem; white-space: nowrap; }
     .pub-list li a.pub-link:hover { text-decoration: underline; }
     .pub-empty { color: #888; font-size: 0.95rem; }
 
-    /* ── Cursos ── */
-    .course-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .course-list li {
-      margin-bottom: 0.9rem;
-      font-size: 0.97rem;
-      line-height: 1.6;
-      border-left: 2px solid #e0e0e0;
-      padding-left: 0.9rem;
-    }
+    .course-list { list-style: none; padding: 0; margin: 0; }
+    .course-list li { margin-bottom: 0.9rem; font-size: 0.97rem; line-height: 1.6; border-left: 2px solid #e0e0e0; padding-left: 0.9rem; }
     .course-list li strong { display: block; }
-    .course-list li span { color: #555; font-size: 0.9rem; }
+    .course-list li span { color: #555; font-size: 0.9rem; display: block; }
 
-    /* ── Network ── */
-    #network {
-      margin-top: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      overflow: hidden;
-      background: #fafafa;
-      user-select: none;
-    }
-    #net-svg {
-      display: block;
-      width: 100%;
-      cursor: grab;
-    }
+    #network { margin-top: 1rem; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: #fafafa; user-select: none; }
+    #net-svg { display: block; width: 100%; cursor: grab; }
     #net-svg.grabbing { cursor: grabbing; }
-    .net-link {
-      stroke: #ddd;
-      stroke-width: 1.5;
-      transition: stroke 0.15s, stroke-width 0.15s, opacity 0.15s;
-    }
-    .net-link.highlighted {
-      stroke: #0055aa;
-      stroke-width: 2.5;
-    }
+    .net-link { stroke: #ddd; stroke-width: 1.5; transition: stroke 0.15s, stroke-width 0.15s, opacity 0.15s; }
+    .net-link.highlighted { stroke: #0055aa; stroke-width: 2.5; }
     .net-link.dimmed { opacity: 0.08; }
-
-    /* Node labels — hidden by default, shown on hover via JS */
     .net-label-bg  { display: none; }
     .net-label-txt { display: none; }
     .net-node.hovered .net-label-bg,
     .net-node.hovered .net-label-txt { display: block; }
 
-    /* Network filter bar */
-    #net-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem 1.2rem;
-      align-items: center;
-      margin-bottom: 0.8rem;
-      font-size: 0.88rem;
-    }
+    #net-controls { display: flex; flex-wrap: wrap; gap: 0.7rem 1.2rem; align-items: center; margin-bottom: 0.8rem; font-size: 0.88rem; }
     #net-controls label { color: #444; }
-    #net-controls select {
-      font-size: 0.88rem;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      padding: 0.2rem 0.5rem;
-      background: #fff;
-      cursor: pointer;
-      color: #222;
-    }
-    #net-controls select:focus { outline: 2px solid #0055aa; }
-
-    /* Year slider row */
-    #year-slider-row {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      width: 100%;
-    }
+    #net-controls select { font-size: 0.88rem; border: 1px solid #ccc; border-radius: 3px; padding: 0.2rem 0.5rem; background: #fff; cursor: pointer; color: #222; }
+    #year-slider-row { display: flex; align-items: center; gap: 0.6rem; width: 100%; }
     #year-slider-row label { color: #444; white-space: nowrap; }
-    #year-display {
-      font-weight: 500;
-      color: #0055aa;
-      min-width: 2.8rem;
-      font-size: 0.88rem;
-    }
-    #filter-year {
-      -webkit-appearance: none;
-      appearance: none;
-      flex: 1;
-      height: 4px;
-      border-radius: 2px;
-      background: #ddd;
-      outline: none;
-      cursor: pointer;
-      accent-color: #0055aa;
-    }
-    #filter-year::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 16px; height: 16px;
-      border-radius: 50%;
-      background: #0055aa;
-      cursor: pointer;
-      border: 2px solid #fff;
-      box-shadow: 0 0 0 1px #0055aa;
-    }
-    #filter-year::-moz-range-thumb {
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: #0055aa;
-      cursor: pointer;
-      border: 2px solid #fff;
-    }
-    #play-btn {
-      font-size: 0.82rem;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      padding: 0.15rem 0.55rem;
-      background: #fff;
-      cursor: pointer;
-      color: #222;
-      white-space: nowrap;
-    }
+    #year-display { font-weight: 500; color: #0055aa; min-width: 2.8rem; font-size: 0.88rem; }
+    #filter-year { -webkit-appearance: none; appearance: none; flex: 1; height: 4px; border-radius: 2px; background: #ddd; outline: none; cursor: pointer; accent-color: #0055aa; }
+    #filter-year::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #0055aa; cursor: pointer; border: 2px solid #fff; box-shadow: 0 0 0 1px #0055aa; }
+    #filter-year::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #0055aa; cursor: pointer; border: 2px solid #fff; }
+    #play-btn { font-size: 0.82rem; border: 1px solid #ccc; border-radius: 3px; padding: 0.15rem 0.55rem; background: #fff; cursor: pointer; color: #222; white-space: nowrap; }
     #play-btn:hover { border-color: #0055aa; color: #0055aa; }
-    .color-key {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
-      font-size: 0.82rem;
-      color: #555;
-      margin-top: 0.4rem;
-      align-items: center;
-    }
-    .color-key span {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .color-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-      flex-shrink: 0;
-    }
+    .color-key { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.82rem; color: #555; margin-top: 0.4rem; align-items: center; }
+    .color-key span { display: inline-flex; align-items: center; gap: 4px; }
+    .color-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    #net-tooltip { position: fixed; background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 0.4rem 0.7rem; font-size: 0.82rem; color: #222; pointer-events: none; max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: none; z-index: 100; line-height: 1.4; }
+    #net-tooltip .tt-role { font-size: 0.72rem; color: #888; display: block; margin-bottom: 2px; }
 
-    /* Tooltip */
-    #net-tooltip {
-      position: fixed;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      padding: 0.4rem 0.7rem;
-      font-size: 0.82rem;
-      color: #222;
-      pointer-events: none;
-      max-width: 280px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: none;
-      z-index: 100;
-      line-height: 1.4;
-    }
-    #net-tooltip .tt-role {
-      font-size: 0.72rem;
-      color: #888;
-      display: block;
-      margin-bottom: 2px;
-    }
+    #map { height: 420px; border: 1px solid #ddd; border-radius: 4px; margin-top: 1rem; }
+    #map-controls { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; font-size: 0.88rem; margin-bottom: 0.6rem; }
+    #map-controls label { color: #444; }
+    #map-controls select { border: 1px solid #ccc; border-radius: 3px; padding: 0.2rem 0.5rem; font-size: 0.88rem; background: #fff; color: #222; }
+    .map-legend { display: flex; gap: 1rem; font-size: 0.82rem; color: #555; margin-top: 0.5rem; flex-wrap: wrap; }
+    .map-legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -270,6 +85,7 @@
     <a href="#research">Pesquisas</a>
     <a href="#publications">Publicações</a>
     <a href="#courses">Ensino</a>
+    <a href="#events">Eventos</a>
     <a href="#cv">CV</a>
     <a href="#contact">Contato</a>
   </nav>
@@ -277,15 +93,24 @@
 
 <main>
 
-  <!-- ── Sobre ── -->
   <section id="about">
     <h2>Sobre</h2>
     <p>
-      Mestrando do Programa de Pós-Graduação em Sociologia (2024–2025) da Universidade de São Paulo (USP) com projeto sobre estruturas de desigualdade e empreendedorismo de base tecnológica, com período de estágio no exterior no Laboratoire d'Économie et de Sociologie du Travail (LEST) do CNRS, na França. Graduado em Ciências Sociais (bacharelado e licenciatura) pela USP. É sub-coordenador do Eixo Métodos do Laboratório de Pesquisa Social (LAPS) (2025–2026). Desde a iniciação científica é pesquisador dos grupos Sociologia Digital e Inteligência Artificial, a qual realizou pesquisas sobre os efeitos sociais da IA no âmbito do Center for Artificial Intelligence (C4AI/USP), e Mobilidades: Teoria, Temas e Métodos (MTTM), sobre a mobilidade de políticas de cidade inteligente (smart cities). Também coordenou o periódico <em>Primeiros Estudos: Revista de Ciências Sociais</em> (USP) entre 2022 a 2025. Tem interesse nos temas: estratificação social; sociologia econômica do desenvolvimento e das organizações; estudos sociais da ciência e tecnologia; metodologia e epistemologia. E-mail: guilherme.olimpio@usp.br ou gui.olimpiofagundes@gmail.com
+      Mestrando do Programa de Pós-Graduação em Sociologia (2024–2025) da Universidade de São Paulo (USP)
+      com projeto sobre estruturas de desigualdade e empreendedorismo de base tecnológica, com período de
+      estágio no exterior no Laboratoire d'Économie et de Sociologie du Travail (LEST) do CNRS, na França.
+      Graduado em Ciências Sociais (bacharelado e licenciatura) pela USP. É sub-coordenador do Eixo Métodos
+      do Laboratório de Pesquisa Social (LAPS) (2025–2026). Desde a iniciação científica é pesquisador dos
+      grupos Sociologia Digital e Inteligência Artificial, a qual realizou pesquisas sobre os efeitos sociais
+      da IA no âmbito do Center for Artificial Intelligence (C4AI/USP), e Mobilidades: Teoria, Temas e Métodos
+      (MTTM), sobre a mobilidade de políticas de cidade inteligente (smart cities). Também coordenou o periódico
+      <em>Primeiros Estudos: Revista de Ciências Sociais</em> (USP) entre 2022 a 2025. Tem interesse nos temas:
+      estratificação social; sociologia econômica do desenvolvimento e das organizações; estudos sociais da
+      ciência e tecnologia; metodologia e epistemologia.
+      E-mail: guilherme.olimpio@usp.br ou gui.olimpiofagundes@gmail.com
     </p>
   </section>
 
-  <!-- ── Pesquisas ── -->
   <section id="research">
     <h2>Pesquisas</h2>
     <div class="tabs" id="research-tabs">
@@ -293,23 +118,17 @@
       <button class="tab-button"        data-tab="completed">Concluídos</button>
     </div>
     <div class="tab-content active" id="ongoing">
-      <ul>
-        <li>Estruturas de desigualdade em processos de inovação em São José dos Campos (2024-2026)</li>
-      </ul>
+      <ul><li>Estruturas de desigualdade em processos de inovação em São José dos Campos (2024–2026)</li></ul>
       <p>Financiamento FAPESP nº 2024/01767-8, nº 2025/15081-3.</p>
     </div>
     <div class="tab-content" id="completed">
-      <ul>
-        <li>Mercados digitais de trabalho: ciência, educação e cidades (2020-2023)</li>
-      </ul>
+      <ul><li>Mercados digitais de trabalho: ciência, educação e cidades (2020–2023)</li></ul>
       <p>Financiamentos FUSP #3541, CNPq 2021-1509</p>
     </div>
   </section>
 
-  <!-- ── Publicações ── -->
   <section id="publications">
     <h2>Publicações</h2>
-
     <div class="tabs" id="pub-tabs">
       <button class="tab-button active" data-tab="pub-working">Working papers</button>
       <button class="tab-button"        data-tab="pub-prelo">No prelo</button>
@@ -336,7 +155,7 @@
         <li>
           Fagundes, Guilherme Olímpio, Murillo Marschner, e Carolina Bueno Stefani. 2025.
           "Ensino médio para quê, para quem? Desigualdades sociais e expectativas de progressão educacional entre jovens no Brasil."
-          In: <em>Expansão educacional, desigualdades e estratificação social: Do desenvolvimento infantil ao mercado de trabalho</em>. EdiPUCRS.
+          In: <em>Expansão educacional, desigualdades e estratificação social</em>. EdiPUCRS.
           <a class="pub-link" href="https://editora.pucrs.br/livro/1832/" target="_blank" rel="noopener">→ Acessar</a>
           <a class="pub-link" href="https://github.com/GuilhermeOlimpio/Origens-sociais-e-expectativas" target="_blank" rel="noopener">→ Códigos</a>
         </li>
@@ -365,15 +184,13 @@
           <a class="pub-link" href="https://periodicos.ufmg.br/index.php/revistatrespontos/article/view/49337/39592" target="_blank" rel="noopener">→ Acessar</a>
         </li>
         <li>
-          Fagundes, Guilherme Olímpio. 2023.
-          "Funcionalismo."
+          Fagundes, Guilherme Olímpio. 2023. "Funcionalismo."
           <em>Enciclopédia de Antropologia da USP</em>.
           <a class="pub-link" href="http://ea.fflch.usp.br/correntes/funcionalismo" target="_blank" rel="noopener">→ Acessar</a>
         </li>
         <li>
           Fagundes, Guilherme Olímpio, Camila Monteiro Corvisier, Henrique Assi Hernandes, João Pedro Gomes Balanco, Lucas de Paula Fonseca, Tales Mançano, Bruna Gisi. 2023.
-          "Entrevista com Bruna Gisi."
-          <em>Revista Três Pontos</em> 10 (2).
+          "Entrevista com Bruna Gisi." <em>Revista Três Pontos</em> 10 (2).
           <a class="pub-link" href="https://revistas.usp.br/primeirosestudos/article/download/211404/194012" target="_blank" rel="noopener">→ Acessar</a>
         </li>
         <li>
@@ -389,9 +206,7 @@
       <p class="pub-empty">Nenhuma tese ou dissertação no momento. Depósito da dissertação em outubro de 2026.</p>
     </div>
 
-    <!-- ── Rede de colaboração ── -->
     <h3 style="margin-top:2.5rem;">Rede de colaboração em publicações</h3>
-
     <div id="net-controls">
       <div id="year-slider-row">
         <label for="filter-year">Ano:</label>
@@ -399,37 +214,27 @@
         <span id="year-display">2026</span>
         <button id="play-btn">▶ Animar</button>
       </div>
-
       <label for="color-mode">Colorir por:</label>
       <select id="color-mode">
         <option value="type">Tipo (autor / publicação)</option>
         <option value="gender">Gênero do autor</option>
       </select>
     </div>
-
     <div class="color-key" id="color-key">
       <span><span class="color-dot" style="background:#0055aa"></span> Autores</span>
-      <span><span class="color-dot" style="background:#888"></span> Publicações</span>
+      <span><span class="color-dot" style="background:#888;border-radius:2px"></span> Publicações</span>
     </div>
-
-    <p style="font-size:0.85rem;color:#777;margin:0.4rem 0 0;">
-      Passe o cursor sobre um nó para ver o nome. Arraste para reorganizar.
-    </p>
-
-    <div id="network">
-      <svg id="net-svg" xmlns="http://www.w3.org/2000/svg"></svg>
-    </div>
+    <p style="font-size:0.85rem;color:#777;margin:0.4rem 0 0;">Passe o cursor sobre um nó para ver o nome. Arraste para reorganizar.</p>
+    <div id="network"><svg id="net-svg" xmlns="http://www.w3.org/2000/svg"></svg></div>
     <div id="net-tooltip"></div>
   </section>
 
-  <!-- ── Ensino ── -->
   <section id="courses">
     <h2>Ensino</h2>
     <div class="tabs" id="courses-tabs">
       <button class="tab-button active" data-tab="courses-workshops">Oficinas</button>
       <button class="tab-button"        data-tab="courses-courses">Cursos</button>
     </div>
-
     <div class="tab-content active" id="courses-workshops">
       <ul class="course-list">
         <li>
@@ -440,9 +245,8 @@
         </li>
       </ul>
     </div>
-       
     <div class="tab-content" id="courses-courses">
-      <ul class="course-list">        
+      <ul class="course-list">
         <li>
           <strong>Métodos e técnicas de pesquisa em ciências sociais: o documental, o presencial e o digital</strong>
           <span>Com Bruno Vieira Borges, Júlia Rodrigues Barros Alves e Victória Henrique Ribeiro</span>
@@ -457,7 +261,7 @@
           <strong>AI Tá On: A pesquisa em IA no Brasil</strong>
           <span>Com Glória Maria de Carvalho</span>
           <span>Universidade de São Paulo · São Paulo (online) · Verão 2025</span>
-          <a class="pub-link" href="https://www.youtube.com/watch?v=6K7NCYWlZoo&pp=ygUVc2VtaW90YWxrcyAgQUkgVMOBIE9O" target="_blank" rel="noopener">→ Acessar</a>
+          <a class="pub-link" href="https://www.youtube.com/watch?v=6K7NCYWlZoo" target="_blank" rel="noopener">→ Acessar</a>
         </li>
         <li>
           <strong>IA e Estado</strong>
@@ -465,39 +269,31 @@
           <span>Universidade de São Paulo · São Paulo (online) · Verão 2025</span>
         </li>
       </ul>
-
-      <!-- Modelo para adicionar uma oficina:
-      <ul class="course-list">
-        <li>
-          <strong>Programando a sociedade: Trabalho, Inteligência Artificial e outras tecnologias</strong>
-          <span>Universidade de São Paulo · São Paulo (online) · 2025</span>
-          <a class="pub-link" href="https://github.com/GuilhermeOlimpio/nome-da-pasta" target="_blank" rel="noopener">→ Acessar</a>
-          <a class="pub-link" href="https://github.com/GuilhermeOlimpio/nome-da-pasta/tree/main/dados" target="_blank" rel="noopener">→ Dados</a>
-        </li>
-      </ul>
-      -->
-
-      
     </div>
-    
-    <div class="tab-content" id="courses-courses">
-      <ul class="course-list">
-        <li>
-          <strong>Nome do curso</strong>
-          <span>Instituição · Local · Ano</span>
-        </li>
-      </ul>
-    </div>
-    
   </section>
 
-  <!-- ── CV ── -->
+  <!-- ── Eventos ── -->
+  <section id="events">
+    <h2>Eventos</h2>
+    <div id="map-controls">
+      <label for="event-year">Ano:</label>
+      <select id="event-year"><option value="all">Todos</option></select>
+      <label for="event-type">Tipo:</label>
+      <select id="event-type"><option value="all">Todos</option></select>
+    </div>
+    <div class="map-legend">
+      <span><span class="legend-dot" style="background:#0055aa"></span> Conferência</span>
+      <span><span class="legend-dot" style="background:#2e7d32"></span> Oficina</span>
+      <span><span class="legend-dot" style="background:#c62828"></span> Apresentação</span>
+    </div>
+    <div id="map"></div>
+  </section>
+
   <section id="cv">
     <h2>Curriculum Vitae</h2>
     <p><a href="cv_guilherme_fagundes.pdf">Download do CV (PDF)</a></p>
   </section>
 
-  <!-- ── Contato ── -->
   <section id="contact">
     <h2>Contato</h2>
     <ul>
@@ -507,31 +303,10 @@
     </ul>
   </section>
 
-  <section id="events">
-  <h2>Eventos</h2>
-
-  <div id="map-controls">
-    <label for="event-year">Ano:</label>
-    <select id="event-year">
-      <option value="all">Todos</option>
-    </select>
-
-    <label for="event-type">Tipo:</label>
-    <select id="event-type">
-      <option value="all">Todos</option>
-    </select>
-  </div>
-
-  <div id="map"></div>
-</section>
-
 </main>
 
-<footer>
-  <p>© 2026 Guilherme Olímpio Fagundes</p>
-</footer>
+<footer><p>© 2026 Guilherme Olímpio Fagundes</p></footer>
 
-<!-- ── Tab logic ── -->
 <script>
   document.querySelectorAll(".tabs").forEach(tabGroup => {
     tabGroup.querySelectorAll(".tab-button").forEach(btn => {
@@ -546,12 +321,8 @@
   });
 </script>
 
-<!-- ── Network ── -->
 <script>
 (function () {
-
-  // ── DATA ─────────────────────────────────────────────────────────────────
-  // gender: "m" = masc, "f" = fem, "?" = desconhecido
   const people = [
     { id: "p2",  name: "Murillo Marschner",               shortName: "Marschner",  type: "person", gender: "m" },
     { id: "p3",  name: "Carolina Bueno Stefani",           shortName: "Stefani",    type: "person", gender: "f" },
@@ -572,558 +343,366 @@
     { id: "p18", name: "Hannah Ramos",                     shortName: "Ramos",      type: "person", gender: "f" },
     { id: "p19", name: "Mauricio Piatti Lages",            shortName: "Lages",      type: "person", gender: "m" },
   ];
-
   const pubs = [
-    { id: "pub1",  year: 2025, shortName: "Ensino médio… (2025)",        name: "Ensino médio para quê, para quem? (2025)",                                                        type: "pub" },
-    { id: "pub2",  year: 2023, shortName: "Trabalho docente (2023)",      name: "Como o trabalho docente é experienciado na educação 4.0? (2023)",                                 type: "pub" },
-    { id: "pub3",  year: 2024, shortName: "Entrevista Paugam (2024)",     name: "Por uma sociologia do vínculo social: entrevista com Serge Paugam (2024)",                        type: "pub" },
-    { id: "pub4",  year: 2024, shortName: "Vala de Perus (2024)",         name: "Vala de Perus como trauma cultural (2024)",                                                       type: "pub" },
-    { id: "pub5",  year: 2024, shortName: "Entrevista Burawoy (2024)",    name: "Novas perspectivas sobre W.E.B Du Bois e sociologia pública: conversa com Michael Burawoy (2024)", type: "pub" },
-    { id: "pub6",  year: 2023, shortName: "Funcionalismo (2023)",         name: "Funcionalismo (2023)",                                                                            type: "pub" },
-    { id: "pub7",  year: 2023, shortName: "Entrevista Gisi (2023)",       name: "Entrevista com Bruna Gisi (2023)",                                                                type: "pub" },
-    { id: "pub8",  year: 2023, shortName: "Desindustrialização (2023)",   name: "Onde está a imaginação sociológica para pensar a desindustrialização? (2023)",                    type: "pub" },
-    { id: "pub9",  year: 2020, shortName: "Eduardo Galvão (2020)",        name: "Eduardo Galvão (2020)",                                                                           type: "pub" },
-    { id: "pub10", year: 2026, shortName: "Mobilidades em rede (2026)",   name: "Mobilidades em rede: análise de redes e mobilities studies (2026)",                              type: "pub" },
+    { id: "pub1",  year: 2025, shortName: "Ensino médio… (2025)",      name: "Ensino médio para quê, para quem? (2025)",                                                         type: "pub" },
+    { id: "pub2",  year: 2023, shortName: "Trabalho docente (2023)",    name: "Como o trabalho docente é experienciado na educação 4.0? (2023)",                                  type: "pub" },
+    { id: "pub3",  year: 2024, shortName: "Entrevista Paugam (2024)",   name: "Por uma sociologia do vínculo social: entrevista com Serge Paugam (2024)",                         type: "pub" },
+    { id: "pub4",  year: 2024, shortName: "Vala de Perus (2024)",       name: "Vala de Perus como trauma cultural (2024)",                                                        type: "pub" },
+    { id: "pub5",  year: 2024, shortName: "Entrevista Burawoy (2024)",  name: "Novas perspectivas sobre W.E.B Du Bois e sociologia pública: conversa com Michael Burawoy (2024)", type: "pub" },
+    { id: "pub6",  year: 2023, shortName: "Funcionalismo (2023)",       name: "Funcionalismo (2023)",                                                                             type: "pub" },
+    { id: "pub7",  year: 2023, shortName: "Entrevista Gisi (2023)",     name: "Entrevista com Bruna Gisi (2023)",                                                                 type: "pub" },
+    { id: "pub8",  year: 2023, shortName: "Desindustrialização (2023)", name: "Onde está a imaginação sociológica para pensar a desindustrialização? (2023)",                     type: "pub" },
+    { id: "pub9",  year: 2020, shortName: "Eduardo Galvão (2020)",      name: "Eduardo Galvão (2020)",                                                                            type: "pub" },
+    { id: "pub10", year: 2026, shortName: "Mobilidades em rede (2026)", name: "Mobilidades em rede: análise de redes e mobilities studies (2026)",                               type: "pub" },
   ];
-
   const edgeDefs = [
-    { source: "p2",  target: "pub1"  },
-    { source: "p3",  target: "pub1"  },
-    { source: "p9",  target: "pub3"  },
-    { source: "p10", target: "pub3"  },
-    { source: "p11", target: "pub3"  },
-    { source: "p12", target: "pub3"  },
-    { source: "p15", target: "pub3"  },
-    { source: "p4",  target: "pub4"  },
-    { source: "p5",  target: "pub4"  },
-    { source: "p10", target: "pub5"  },
-    { source: "p11", target: "pub5"  },
-    { source: "p16", target: "pub5"  },
-    { source: "p9",  target: "pub7"  },
-    { source: "p10", target: "pub7"  },
-    { source: "p11", target: "pub7"  },
-    { source: "p7",  target: "pub7"  },
-    { source: "p13", target: "pub7"  },
-    { source: "p14", target: "pub7"  },
-    { source: "p7",  target: "pub8"  },
-    { source: "p17", target: "pub8"  },
-    { source: "p18", target: "pub8"  },
-    { source: "p9",  target: "pub8"  },
-    { source: "p6",  target: "pub9"  },
-    { source: "p7",  target: "pub9"  },
-    { source: "p8",  target: "pub9"  },
-    { source: "p19", target: "pub10" },
+    { source: "p2",  target: "pub1"  }, { source: "p3",  target: "pub1"  },
+    { source: "p9",  target: "pub3"  }, { source: "p10", target: "pub3"  },
+    { source: "p11", target: "pub3"  }, { source: "p12", target: "pub3"  },
+    { source: "p15", target: "pub3"  }, { source: "p4",  target: "pub4"  },
+    { source: "p5",  target: "pub4"  }, { source: "p10", target: "pub5"  },
+    { source: "p11", target: "pub5"  }, { source: "p16", target: "pub5"  },
+    { source: "p9",  target: "pub7"  }, { source: "p10", target: "pub7"  },
+    { source: "p11", target: "pub7"  }, { source: "p7",  target: "pub7"  },
+    { source: "p13", target: "pub7"  }, { source: "p14", target: "pub7"  },
+    { source: "p7",  target: "pub8"  }, { source: "p17", target: "pub8"  },
+    { source: "p18", target: "pub8"  }, { source: "p9",  target: "pub8"  },
+    { source: "p6",  target: "pub9"  }, { source: "p7",  target: "pub9"  },
+    { source: "p8",  target: "pub9"  }, { source: "p19", target: "pub10" },
   ];
 
-  // ── COLOR PALETTES ───────────────────────────────────────────────────────
   const COLOR = {
-    type: { person: "#0055aa", pub: "#888" },
+    type:   { person: "#0055aa", pub: "#888" },
     gender: { m: "#0055aa", f: "#c2185b", "?": "#888", pub: "#ccc" }
   };
-
   const KEY_LABELS = {
-    type:   [
-      { color: "#0055aa", label: "Autores",      shape: "circle" },
-      { color: "#888",    label: "Publicações",   shape: "square" }
-    ],
-    gender: [
-      { color: "#0055aa", label: "Masculino",        shape: "circle" },
-      { color: "#c2185b", label: "Feminino",          shape: "circle" },
-      { color: "#ccc",    label: "Publicações",   shape: "square" }
-    ]
+    type:   [ { color: "#0055aa", label: "Autores",     shape: "circle" }, { color: "#888",    label: "Publicações", shape: "square" } ],
+    gender: [ { color: "#0055aa", label: "Masculino",   shape: "circle" }, { color: "#c2185b", label: "Feminino",    shape: "circle" }, { color: "#ccc", label: "Publicações", shape: "square" } ]
   };
 
-  // ── SETUP ────────────────────────────────────────────────────────────────
-  const W = 700, H = 500;
-  const NS  = "http://www.w3.org/2000/svg";
+  const W = 700, H = 500, NS = "http://www.w3.org/2000/svg";
   const svg = document.getElementById("net-svg");
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   svg.style.height = H + "px";
   const tooltip = document.getElementById("net-tooltip");
 
-  // Build full node list (all nodes, always in DOM)
   const allNodes = [...people, ...pubs].map((d, i) => {
     const angle = (i / (people.length + pubs.length)) * 2 * Math.PI;
     const r = 140 + Math.random() * 30;
     return { ...d, x: W/2 + r * Math.cos(angle), y: H/2 + r * Math.sin(angle), vx: 0, vy: 0, pinned: false, active: true };
   });
-
   const nodeById = {};
   allNodes.forEach(n => nodeById[n.id] = n);
-
-  const allEdges = edgeDefs.map(e => ({
-    source: nodeById[e.source],
-    target: nodeById[e.target],
-    active: true
-  }));
-
-  // Fixed radius for all nodes — NOT scaled by degree (req. 4)
+  const allEdges = edgeDefs.map(e => ({ source: nodeById[e.source], target: nodeById[e.target], active: true }));
   const NODE_R = 8;
 
-  // ── SVG LAYERS ───────────────────────────────────────────────────────────
   function svgEl(tag, attrs) {
     const e = document.createElementNS(NS, tag);
     Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
     return e;
   }
-
   const linkLayer = svgEl("g", {}); svg.appendChild(linkLayer);
   const nodeLayer = svgEl("g", {}); svg.appendChild(nodeLayer);
 
-  // ── EDGE ELEMENTS ────────────────────────────────────────────────────────
   const linkEls = allEdges.map(e => {
     const line = svgEl("line", { class: "net-link" });
     linkLayer.appendChild(line);
     return { el: line, edge: e };
   });
 
-  // ── NODE ELEMENTS ────────────────────────────────────────────────────────
   const nodeGroups = {};
   allNodes.forEach(n => {
     const g = svgEl("g", { class: `net-node ${n.type}`, "data-id": n.id, style: "cursor:grab" });
-
-    // Publications get a square, people get a circle
     const circle = n.type === "pub"
-      ? svgEl("rect", { x: -NODE_R, y: -NODE_R, width: NODE_R*2, height: NODE_R*2, stroke: "#fff", "stroke-width": "2", rx: "2" })
+      ? svgEl("rect",   { x: -NODE_R, y: -NODE_R, width: NODE_R*2, height: NODE_R*2, stroke: "#fff", "stroke-width": "2", rx: "2" })
       : svgEl("circle", { r: NODE_R, stroke: "#fff", "stroke-width": "2" });
     g.appendChild(circle);
-
-    // Label background (hidden unless hovered)
     const bg = svgEl("rect", { rx: "3", ry: "3", class: "net-label-bg", fill: "rgba(255,255,255,0.92)", "pointer-events": "none" });
     g.appendChild(bg);
-
-    const txt = svgEl("text", {
-      class: "net-label-txt",
-      "font-size": "11",
-      fill: "#222",
-      "font-family": "system-ui, sans-serif",
-      "pointer-events": "none"
-    });
+    const txt = svgEl("text", { class: "net-label-txt", "font-size": "11", fill: "#222", "font-family": "system-ui, sans-serif", "pointer-events": "none" });
     txt.textContent = n.shortName;
     g.appendChild(txt);
-
     nodeLayer.appendChild(g);
     nodeGroups[n.id] = { g, circle, bg, txt };
   });
 
-  // ── COLOR UPDATE ─────────────────────────────────────────────────────────
   function applyColors(mode) {
     allNodes.forEach(n => {
-      const { circle } = nodeGroups[n.id];
-      let c;
-      if (mode === "gender") {
-        c = n.type === "pub" ? COLOR.gender.pub : (COLOR.gender[n.gender] || COLOR.gender["?"]);
-      } else {
-        c = COLOR.type[n.type];
-      }
-      circle.setAttribute("fill", c);
+      const c = mode === "gender"
+        ? (n.type === "pub" ? COLOR.gender.pub : (COLOR.gender[n.gender] || COLOR.gender["?"]))
+        : COLOR.type[n.type];
+      nodeGroups[n.id].circle.setAttribute("fill", c);
     });
-
-    // Update legend
-    const keyEl = document.getElementById("color-key");
-    keyEl.innerHTML = KEY_LABELS[mode].map(k => {
-      const sh = k.shape === "square"
-        ? `<span class="color-dot" style="background:${k.color};border-radius:2px"></span>`
-        : `<span class="color-dot" style="background:${k.color}"></span>`;
-      return `<span>${sh} ${k.label}</span>`;
-    }).join("");
+    document.getElementById("color-key").innerHTML = KEY_LABELS[mode].map(k =>
+      `<span>${k.shape === "square" ? `<span class="color-dot" style="background:${k.color};border-radius:2px"></span>` : `<span class="color-dot" style="background:${k.color}"></span>`} ${k.label}</span>`
+    ).join("");
   }
 
-  // ── YEAR FILTER ──────────────────────────────────────────────────────────
   function applyYearFilter(maxYear) {
-    allNodes.forEach(n => {
-      if (n.type === "pub") {
-        n.active = (maxYear === "all" || n.year <= parseInt(maxYear));
-      }
-    });
-    // A person node is active if it has at least one active edge
-    allNodes.forEach(n => {
-      if (n.type === "person") {
-        n.active = allEdges.some(e => e.source.id === n.id && e.target.active);
-      }
-    });
-    allEdges.forEach(e => {
-      e.active = e.source.active && e.target.active;
-    });
-
-    // Show/hide elements
-    allNodes.forEach(n => {
-      nodeGroups[n.id].g.style.display = n.active ? "" : "none";
-    });
-    linkEls.forEach(l => {
-      l.el.style.display = l.edge.active ? "" : "none";
-    });
-
-    // Restart sim
+    allNodes.forEach(n => { if (n.type === "pub") n.active = (maxYear === "all" || n.year <= parseInt(maxYear)); });
+    allNodes.forEach(n => { if (n.type === "person") n.active = allEdges.some(e => e.source.id === n.id && e.target.active); });
+    allEdges.forEach(e => { e.active = e.source.active && e.target.active; });
+    allNodes.forEach(n => { nodeGroups[n.id].g.style.display = n.active ? "" : "none"; });
+    linkEls.forEach(l  => { l.el.style.display = l.edge.active ? "" : "none"; });
     running = true; frameCount = 0; tick();
   }
 
   const KA = 0.06, KR = 6000, KG = 0.010, DAMP = 0.82;
   let running = true, frameCount = 0;
 
-  // ── CONTROLS ─────────────────────────────────────────────────────────────
-  const sliderEl  = document.getElementById("filter-year");
+  const sliderEl = document.getElementById("filter-year");
   const displayEl = document.getElementById("year-display");
-  const playBtn   = document.getElementById("play-btn");
-
+  const playBtn = document.getElementById("play-btn");
   const YEARS = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
   let animTimer = null;
 
-  function setYear(yr) {
-    sliderEl.value  = yr;
-    displayEl.textContent = yr;
-    applyYearFilter(yr);
-  }
+  function setYear(yr) { sliderEl.value = yr; displayEl.textContent = yr; applyYearFilter(yr); }
+  function stopAnim() { if (animTimer) { clearInterval(animTimer); animTimer = null; } playBtn.textContent = "▶ Animar"; }
 
-  sliderEl.addEventListener("input", e => {
-    stopAnim();
-    setYear(parseInt(e.target.value));
-  });
-
-  function stopAnim() {
-    if (animTimer) { clearInterval(animTimer); animTimer = null; }
-    playBtn.textContent = "▶ Animar";
-  }
-
+  sliderEl.addEventListener("input", e => { stopAnim(); setYear(parseInt(e.target.value)); });
   playBtn.addEventListener("click", () => {
     if (animTimer) { stopAnim(); return; }
-    // Start from earliest year
-    let idx = 0;
-    setYear(YEARS[idx]);
-    playBtn.textContent = "⏹ Parar";
-    animTimer = setInterval(() => {
-      idx++;
-      if (idx >= YEARS.length) { stopAnim(); return; }
-      setYear(YEARS[idx]);
-    }, 1400);
+    let idx = 0; setYear(YEARS[idx]); playBtn.textContent = "⏹ Parar";
+    animTimer = setInterval(() => { idx++; if (idx >= YEARS.length) { stopAnim(); return; } setYear(YEARS[idx]); }, 1400);
   });
+  document.getElementById("color-mode").addEventListener("change", e => applyColors(e.target.value));
+  setYear(2026); applyColors("type");
 
-  document.getElementById("color-mode").addEventListener("change", e => {
-    applyColors(e.target.value);
-  });
-
-  // Init: show all years, default colors
-  setYear(2026);
-  applyColors("type");
-
-  // ── LABEL PLACEMENT (on hover only) ──────────────────────────────────────
-  const CANDIDATES = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, -3*Math.PI/4, -Math.PI/2, -Math.PI/4];
-  const LABEL_DIST = 6, LABEL_H = 14;
+  const CANDS = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, -3*Math.PI/4, -Math.PI/2, -Math.PI/4];
+  const LDIST = 6, LH = 14;
 
   function positionLabel(n) {
     const { bg, txt } = nodeGroups[n.id];
-
-    // Compute best angle: away from active neighbours and nearby nodes
-    let sumX = 0, sumY = 0, count = 0;
+    let sx = 0, sy = 0, cnt = 0;
     allEdges.forEach(e => {
       if (!e.active) return;
-      let other = null;
-      if (e.source.id === n.id) other = e.target;
-      if (e.target.id === n.id) other = e.source;
-      if (other) { sumX += other.x - n.x; sumY += other.y - n.y; count++; }
+      const other = e.source.id === n.id ? e.target : (e.target.id === n.id ? e.source : null);
+      if (other) { sx += other.x - n.x; sy += other.y - n.y; cnt++; }
     });
     allNodes.forEach(m => {
       if (m.id === n.id || !m.active) return;
-      const dx = m.x - n.x, dy = m.y - n.y;
-      const d = Math.sqrt(dx*dx + dy*dy);
-      if (d < 100) { sumX += dx/d * 50; sumY += dy/d * 50; count++; }
+      const dx = m.x - n.x, dy = m.y - n.y, d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 100) { sx += dx/d*50; sy += dy/d*50; cnt++; }
     });
-
-    const crowdAngle = count ? Math.atan2(sumY, sumX) : 0;
-    const awayAngle  = crowdAngle + Math.PI;
-    let best = CANDIDATES[0], bestDiff = Infinity;
-    CANDIDATES.forEach(c => {
-      let diff = Math.abs(c - awayAngle);
-      if (diff > Math.PI) diff = 2*Math.PI - diff;
-      if (diff < bestDiff) { bestDiff = diff; best = c; }
-    });
-
-    let tw = 80;
-    try { tw = txt.getComputedTextLength() + 8; } catch(_) {}
-
-    const lx = (NODE_R + LABEL_DIST) * Math.cos(best);
-    const ly = (NODE_R + LABEL_DIST) * Math.sin(best);
-
+    const away = (cnt ? Math.atan2(sy, sx) : 0) + Math.PI;
+    let best = CANDS[0], bd = Infinity;
+    CANDS.forEach(c => { let d = Math.abs(c - away); if (d > Math.PI) d = 2*Math.PI - d; if (d < bd) { bd = d; best = c; } });
+    let tw = 80; try { tw = txt.getComputedTextLength() + 8; } catch(_) {}
+    const lx = (NODE_R + LDIST) * Math.cos(best), ly = (NODE_R + LDIST) * Math.sin(best);
     let anchor = "middle";
-    if (Math.cos(best) > 0.4)      anchor = "start";
-    else if (Math.cos(best) < -0.4) anchor = "end";
-
-    txt.setAttribute("x", lx);
-    txt.setAttribute("y", ly);
-    txt.setAttribute("dy", "0.35em");
-    txt.setAttribute("text-anchor", anchor);
-
-    let bx = lx - tw/2;
-    if (anchor === "start") bx = lx - 2;
-    if (anchor === "end")   bx = lx - tw + 2;
-
-    bg.setAttribute("x",      bx);
-    bg.setAttribute("y",      ly - LABEL_H/2);
-    bg.setAttribute("width",  tw);
-    bg.setAttribute("height", LABEL_H);
+    if (Math.cos(best) > 0.4) anchor = "start"; else if (Math.cos(best) < -0.4) anchor = "end";
+    txt.setAttribute("x", lx); txt.setAttribute("y", ly); txt.setAttribute("dy", "0.35em"); txt.setAttribute("text-anchor", anchor);
+    let bx = lx - tw/2; if (anchor === "start") bx = lx - 2; if (anchor === "end") bx = lx - tw + 2;
+    bg.setAttribute("x", bx); bg.setAttribute("y", ly - LH/2); bg.setAttribute("width", tw); bg.setAttribute("height", LH);
   }
 
-  // ── TOOLTIP ──────────────────────────────────────────────────────────────
-  function showTT(evt, html) {
-    tooltip.innerHTML = html;
-    tooltip.style.display = "block";
-    moveTT(evt);
-  }
-  function moveTT(evt) {
-    tooltip.style.left = (evt.clientX + 14) + "px";
-    tooltip.style.top  = (evt.clientY - 10) + "px";
-  }
+  function showTT(e, h) { tooltip.innerHTML = h; tooltip.style.display = "block"; moveTT(e); }
+  function moveTT(e) { tooltip.style.left = (e.clientX+14)+"px"; tooltip.style.top = (e.clientY-10)+"px"; }
   function hideTT() { tooltip.style.display = "none"; resetHL(); }
-
-  // ── HIGHLIGHT ────────────────────────────────────────────────────────────
   function resetHL() {
-    linkEls.forEach(l => { l.el.classList.remove("highlighted"); l.el.classList.remove("dimmed"); });
-    allNodes.forEach(n => { nodeGroups[n.id].circle.setAttribute("opacity", 1); });
+    linkEls.forEach(l => { l.el.classList.remove("highlighted","dimmed"); });
+    allNodes.forEach(n => nodeGroups[n.id].circle.setAttribute("opacity", 1));
   }
   function highlight(id) {
     allNodes.forEach(n => nodeGroups[n.id].circle.setAttribute("opacity", 0.18));
     linkEls.forEach(l => l.el.classList.add("dimmed"));
-
     nodeGroups[id].circle.setAttribute("opacity", 1);
     linkEls.forEach(l => {
       if (!l.edge.active) return;
       if (l.edge.source.id === id || l.edge.target.id === id) {
-        l.el.classList.remove("dimmed");
-        l.el.classList.add("highlighted");
-        const other = l.edge.source.id === id ? l.edge.target.id : l.edge.source.id;
-        nodeGroups[other].circle.setAttribute("opacity", 1);
+        l.el.classList.remove("dimmed"); l.el.classList.add("highlighted");
+        nodeGroups[l.edge.source.id === id ? l.edge.target.id : l.edge.source.id].circle.setAttribute("opacity", 1);
       }
     });
   }
 
-  // ── HOVER ────────────────────────────────────────────────────────────────
   allNodes.forEach(n => {
     const { g } = nodeGroups[n.id];
-
     g.addEventListener("mouseenter", evt => {
       if (dragging) return;
-      g.classList.add("hovered");
-      positionLabel(n);
-      highlight(n.id);
-
-      let list;
-      if (n.type === "person") {
-        list = allEdges.filter(e => e.active && e.source.id === n.id)
-          .map(e => `<li>${e.target.shortName}</li>`).join("");
-        showTT(evt, `<span class="tt-role">Autor</span><strong>${n.name}</strong>`
-          + (list ? `<ul style="margin:4px 0 0 14px;padding:0;font-size:0.78rem;">${list}</ul>` : ""));
-      } else {
-        list = allEdges.filter(e => e.active && e.target.id === n.id)
-          .map(e => `<li>${e.source.name}</li>`).join("");
-        showTT(evt, `<span class="tt-role">Publicação</span><strong>${n.name}</strong>`
-          + (list ? `<ul style="margin:4px 0 0 14px;padding:0;font-size:0.78rem;">${list}</ul>` : ""));
-      }
+      g.classList.add("hovered"); positionLabel(n); highlight(n.id);
+      const list = (n.type === "person"
+        ? allEdges.filter(e => e.active && e.source.id === n.id).map(e => `<li>${e.target.shortName}</li>`)
+        : allEdges.filter(e => e.active && e.target.id === n.id).map(e => `<li>${e.source.name}</li>`)).join("");
+      showTT(evt, `<span class="tt-role">${n.type === "person" ? "Autor" : "Publicação"}</span><strong>${n.name}</strong>` + (list ? `<ul style="margin:4px 0 0 14px;padding:0;font-size:0.78rem;">${list}</ul>` : ""));
     });
     g.addEventListener("mousemove", moveTT);
-    g.addEventListener("mouseleave", () => {
-      g.classList.remove("hovered");
-      if (!dragging) hideTT();
-    });
+    g.addEventListener("mouseleave", () => { g.classList.remove("hovered"); if (!dragging) hideTT(); });
   });
 
-  // ── DRAG ─────────────────────────────────────────────────────────────────
-  let dragging = null, dragOffX = 0, dragOffY = 0;
-
-  function svgPt(evt) {
-    const rect = svg.getBoundingClientRect();
-    const cx = evt.touches ? evt.touches[0].clientX : evt.clientX;
-    const cy = evt.touches ? evt.touches[0].clientY : evt.clientY;
-    return { x: (cx - rect.left) * (W / rect.width), y: (cy - rect.top) * (H / rect.height) };
+  let dragging = null, dox = 0, doy = 0;
+  function svgPt(e) {
+    const r = svg.getBoundingClientRect();
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    const cy = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: (cx - r.left) * (W / r.width), y: (cy - r.top) * (H / r.height) };
   }
-
   allNodes.forEach(n => {
     const { g } = nodeGroups[n.id];
-    function onDown(evt) {
-      evt.preventDefault();
-      dragging = n; n.pinned = true;
-      const pt = svgPt(evt);
-      dragOffX = pt.x - n.x; dragOffY = pt.y - n.y;
-      svg.classList.add("grabbing"); hideTT();
-    }
-    g.addEventListener("mousedown",  onDown);
+    function onDown(e) { e.preventDefault(); dragging = n; n.pinned = true; const p = svgPt(e); dox = p.x - n.x; doy = p.y - n.y; svg.classList.add("grabbing"); hideTT(); }
+    g.addEventListener("mousedown", onDown);
     g.addEventListener("touchstart", onDown, { passive: false });
   });
-
-  window.addEventListener("mousemove", evt => {
-    if (!dragging) return;
-    const pt = svgPt(evt);
-    dragging.x = pt.x - dragOffX; dragging.y = pt.y - dragOffY;
-    dragging.vx = 0; dragging.vy = 0;
-    render();
-  });
-  window.addEventListener("touchmove", evt => {
-    if (!dragging) return;
-    evt.preventDefault();
-    const pt = svgPt(evt);
-    dragging.x = pt.x - dragOffX; dragging.y = pt.y - dragOffY;
-    dragging.vx = 0; dragging.vy = 0;
-    render();
-  }, { passive: false });
-
-  function releaseNode() {
-    if (!dragging) return;
-    dragging.pinned = false; dragging = null;
-    svg.classList.remove("grabbing");
-    running = true; frameCount = 0; tick();
-  }
-  window.addEventListener("mouseup",  releaseNode);
+  window.addEventListener("mousemove", e => { if (!dragging) return; const p = svgPt(e); dragging.x = p.x - dox; dragging.y = p.y - doy; dragging.vx = 0; dragging.vy = 0; render(); });
+  window.addEventListener("touchmove", e => { if (!dragging) return; e.preventDefault(); const p = svgPt(e); dragging.x = p.x - dox; dragging.y = p.y - doy; dragging.vx = 0; dragging.vy = 0; render(); }, { passive: false });
+  function releaseNode() { if (!dragging) return; dragging.pinned = false; dragging = null; svg.classList.remove("grabbing"); running = true; frameCount = 0; tick(); }
+  window.addEventListener("mouseup", releaseNode);
   window.addEventListener("touchend", releaseNode);
 
-  // ── FORCE SIMULATION ─────────────────────────────────────────────────────
-
-  function activeNodes() { return allNodes.filter(n => n.active); }
-  function activeEdges() { return allEdges.filter(e => e.active); }
-
   function forceStep() {
-    const ns = activeNodes();
-    const es = activeEdges();
+    const ns = allNodes.filter(n => n.active), es = allEdges.filter(e => e.active);
     ns.forEach(n => { n.fx = 0; n.fy = 0; });
-
-    for (let i = 0; i < ns.length; i++) {
-      for (let j = i+1; j < ns.length; j++) {
-        const a = ns[i], b = ns[j];
-        let dx = a.x - b.x, dy = a.y - b.y;
-        const d2 = Math.max(dx*dx + dy*dy, 1);
-        const d  = Math.sqrt(d2), f = KR / d2;
-        a.fx += f*dx/d; a.fy += f*dy/d;
-        b.fx -= f*dx/d; b.fy -= f*dy/d;
-      }
+    for (let i = 0; i < ns.length; i++) for (let j = i+1; j < ns.length; j++) {
+      const a = ns[i], b = ns[j], dx = a.x-b.x, dy = a.y-b.y;
+      const d2 = Math.max(dx*dx+dy*dy, 1), d = Math.sqrt(d2), f = KR/d2;
+      a.fx += f*dx/d; a.fy += f*dy/d; b.fx -= f*dx/d; b.fy -= f*dy/d;
     }
     es.forEach(e => {
-      const dx = e.target.x - e.source.x, dy = e.target.y - e.source.y;
-      const d  = Math.sqrt(dx*dx + dy*dy) || 1, f = KA * d;
-      e.source.fx += f*dx/d; e.source.fy += f*dy/d;
-      e.target.fx -= f*dx/d; e.target.fy -= f*dy/d;
+      const dx = e.target.x-e.source.x, dy = e.target.y-e.source.y, d = Math.sqrt(dx*dx+dy*dy)||1, f = KA*d;
+      e.source.fx += f*dx/d; e.source.fy += f*dy/d; e.target.fx -= f*dx/d; e.target.fy -= f*dy/d;
     });
-    ns.forEach(n => { n.fx += KG*(W/2 - n.x); n.fy += KG*(H/2 - n.y); });
-
+    ns.forEach(n => { n.fx += KG*(W/2-n.x); n.fy += KG*(H/2-n.y); });
     let maxV = 0;
     ns.forEach(n => {
       if (n.pinned) return;
-      n.vx = (n.vx + n.fx) * DAMP;
-      n.vy = (n.vy + n.fy) * DAMP;
-      n.x  = Math.max(30, Math.min(W-30, n.x + n.vx));
-      n.y  = Math.max(30, Math.min(H-30, n.y + n.vy));
-      maxV = Math.max(maxV, Math.abs(n.vx) + Math.abs(n.vy));
+      n.vx = (n.vx+n.fx)*DAMP; n.vy = (n.vy+n.fy)*DAMP;
+      n.x = Math.max(30, Math.min(W-30, n.x+n.vx)); n.y = Math.max(30, Math.min(H-30, n.y+n.vy));
+      maxV = Math.max(maxV, Math.abs(n.vx)+Math.abs(n.vy));
     });
     return maxV;
   }
-
   function render() {
-    linkEls.forEach(l => {
-      l.el.setAttribute("x1", l.edge.source.x); l.el.setAttribute("y1", l.edge.source.y);
-      l.el.setAttribute("x2", l.edge.target.x); l.el.setAttribute("y2", l.edge.target.y);
-    });
-    allNodes.forEach(n => {
-      nodeGroups[n.id].g.setAttribute("transform", `translate(${n.x},${n.y})`);
-    });
+    linkEls.forEach(l => { l.el.setAttribute("x1", l.edge.source.x); l.el.setAttribute("y1", l.edge.source.y); l.el.setAttribute("x2", l.edge.target.x); l.el.setAttribute("y2", l.edge.target.y); });
+    allNodes.forEach(n => nodeGroups[n.id].g.setAttribute("transform", `translate(${n.x},${n.y})`));
   }
-
-  function tick() {
-    if (!running) return;
-    const maxV = forceStep();
-    render();
-    frameCount++;
-    if (maxV > 0.08 || frameCount < 280) requestAnimationFrame(tick);
-    else running = false;
-  }
-
+  function tick() { if (!running) return; const v = forceStep(); render(); frameCount++; if (v > 0.08 || frameCount < 280) requestAnimationFrame(tick); else running = false; }
   tick();
-
-
-
 })();
 </script>
 
 <script>
-(async function () {
+(function () {
+  // ── EVENTOS ────────────────────────────────────────────────────────────
+  // Para adicionar um evento:
+  // { name, type, year, location, lat, lng, description }
+  // Tipos: "conferência" | "oficina" | "apresentação"
+  const events = [
+  {
+    "name": "XXI Congresso Brasileiro de Sociologia",
+    "year": 2023,
+    "type": "conferência",
+    "location": "UFPA, Belém (PA), Brasil",
+    "lat": -1.4694826201381503,
+    "lng": -48.44655128839372,
+    "description": "Apresentação <<Seguindo políticas de cidades inteligentes>> no Sociólogos do Futuro."
+  },
+  {
+    "name": "Atelier Réseaux LEST",
+    "year": 2026,
+    "type": "oficina",
+    "location": "LEST, Aix-en-Provence, França",
+    "lat": 43.5297,
+    "lng": 5.4474,
+    "description": "Apresentação <<Les inégalités relationnelles parmi les entrepreneurs de start-up à São Paulo, Brésil>>. Discussão metodológica sobre redes."
+  },
+  {
+    "name": "XXII Congresso Brasileiro de Sociologia",
+    "year": 2025,
+    "type": "conferência",
+    "location": "USP, São Paulo (SP), Brasil",
+    "lat": -23.5642018520652,
+    "lng": -46.723804631201226,
+    "description": "Apresentação <<Contribuições da análise de redes para a sociologia das mobilidades>> no GT 11 sobre mobilidades e infraestruturas."
+  },
+  {
+    "name": "SemioTalks2",
+    "year": 2025,
+    "type": "oficina",
+    "location": "USP, São Paulo (SP), Brasil (online)",
+    "lat": -23.5642018520652,
+    "lng": -46.723804631201226,
+    "description": "Apresentação <<A Pesquisa em IA no Brasil>>. Com transmissão no Youtube."
+  }, 
+  {
+    "name": "32º SIICUSP",
+    "year": 2024,
+    "type": "conferência",
+    "location": "USP, São Paulo (SP), Brasil",
+    "lat": -23.5642018520652,
+    "lng": -46.723804631201226,
+    "description": "Apresentação <<Mapeamento da produção de conhecimento em Humanidades sobre IA (C4AI)>>."
+  }, 
+  {
+    "name": "Seminário Fluminense de Sociologia",
+    "year": 2025,
+    "type": "conferência",
+    "location": "UFF, Niterói (RJ), Brasil",
+    "lat": -22.901076777842743,  
+    "lng": -43.12980830049263,
+    "description": "Apresentação <<Empreendedorismo e redes pessoais: Como redes e trajetórias podem revelar iniquidades sociais em uma aceleradora?>> GT 7. Sociologia Econômica"
+  },
+  {
+    "name": "I Seminário Interno Mobilidades: Teoria, Temas e Métodos",
+    "year": 2023,
+    "type": "conferência",
+    "location": "USP, São Paulo (SP), Brasil",
+    "lat": -23.5642018520652,
+    "lng": -46.723804631201226,
+    "description": "Apresentação <<Sistemas de inovação on the move?>>"
+  }, 
+  {
+    "name": "Graduação em Foco",
+    "year": 2022,
+    "type": "conferência",
+    "location": "UFMG, Belo Horizonte (MG), Brasil (online)",
+    "lat": -23.5642018520652,
+    "lng": -46.723804631201226,
+    "description": "Apresentação <<Como o trabalho docente é experienciado na Educação 4.0?>>"
+  }, 
+  {
+    "name": "Ciclo de oficinas metodológicas do LAPS",
+    "year": 2026,
+    "type": "conferência",
+    "location": "USP, São Paulo (SP), Brasil",
+    "lat": -23.5642018520652,
+    "lng": -46.723804631201226,
+    "description": "Apresentação <<Análise de redes pessoais: teoria e método>>"
+  } 
+];
 
-  const colors = {
-  "conferência": "#0055aa",
-  "oficina": "#2e7d32",
-  "apresentação": "#c62828"
-  };
-  
-  const map = L.map('map').setView([20, 0], 2);
+  const COLORS = { "conferência": "#0055aa", "oficina": "#2e7d32", "apresentação": "#c62828" };
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap'
+  const map = L.map("map").setView([20, 10], 2);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
   }).addTo(map);
 
-  const res = await fetch('events.json');
-  const events = await res.json();
+  const yearSel = document.getElementById("event-year");
+  const typeSel = document.getElementById("event-type");
 
-  const yearSelect = document.getElementById('event-year');
-  const typeSelect = document.getElementById('event-type');
-
-  const years = [...new Set(events.map(e => e.year))].sort();
-  const types = [...new Set(events.map(e => e.type))].sort();
-
-  years.forEach(y => {
-    const opt = document.createElement('option');
-    opt.value = y;
-    opt.textContent = y;
-    yearSelect.appendChild(opt);
+  [...new Set(events.map(e => e.year))].sort().forEach(y => {
+    const o = document.createElement("option"); o.value = y; o.textContent = y; yearSel.appendChild(o);
   });
-
-  types.forEach(t => {
-    const opt = document.createElement('option');
-    opt.value = t;
-    opt.textContent = t;
-    typeSelect.appendChild(opt);
+  [...new Set(events.map(e => e.type))].sort().forEach(t => {
+    const o = document.createElement("option"); o.value = t; o.textContent = t.charAt(0).toUpperCase() + t.slice(1); typeSel.appendChild(o);
   });
 
   let markers = [];
-
-function render() {
-  markers.forEach(m => map.removeLayer(m));
-  markers = [];
-
-  const selectedYear = yearSelect.value;
-  const selectedType = typeSelect.value;
-
-  events
-    .filter(e => selectedYear === 'all' || e.year == selectedYear)
-    .filter(e => selectedType === 'all' || e.type == selectedType)
-    .forEach(e => {
-
-      const marker = L.circleMarker([e.lat, e.lng], {
-        radius: 6,
-        fillColor: colors[e.type] || "#888",
-        color: "#fff",
-        weight: 1,
-        fillOpacity: 0.9
-      }).addTo(map);
-
-      marker.bindPopup(`
-        <strong>${e.name}</strong><br/>
-        <em>${e.type} · ${e.year}</em><br/>
-        ${e.location}<br/>
-        ${e.description || ""}
-      `);
-
-      marker.bindTooltip(e.name);
-
-      markers.push(marker);
-    });
-
-  // ✅ AGORA NO LUGAR CERTO
-  if (markers.length > 0) {
-    const group = L.featureGroup(markers);
-    map.fitBounds(group.getBounds().pad(0.2));
+  function renderMap() {
+    markers.forEach(m => map.removeLayer(m)); markers = [];
+    const yr = yearSel.value, tp = typeSel.value;
+    events.filter(e => (yr === "all" || String(e.year) === yr) && (tp === "all" || e.type === tp))
+      .forEach(e => {
+        const m = L.circleMarker([e.lat, e.lng], { radius: 7, fillColor: COLORS[e.type] || "#888", color: "#fff", weight: 1.5, fillOpacity: 0.9 }).addTo(map);
+        m.bindTooltip(e.name, { sticky: true });
+        m.bindPopup(`<strong>${e.name}</strong><br/><em>${e.type.charAt(0).toUpperCase()+e.type.slice(1)} &middot; ${e.year}</em><br/>${e.location}` + (e.description ? `<br/><span style="color:#555;font-size:0.9em">${e.description}</span>` : ""));
+        markers.push(m);
+      });
+    if (markers.length > 0) map.fitBounds(L.featureGroup(markers).getBounds().pad(0.3));
   }
-}
-
-  yearSelect.addEventListener('change', render);
-  typeSelect.addEventListener('change', render);
-
-  render();
-
+  yearSel.addEventListener("change", renderMap);
+  typeSel.addEventListener("change", renderMap);
+  renderMap();
 })();
 </script>
 
