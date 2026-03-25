@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog · Guilherme Olímpio Fagundes</title>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 0; color: #222; background: #fff; line-height: 1.6; }
+    header { max-width: 800px; margin: 3rem auto 2rem; padding: 0 1rem; }
+    header h1 { margin-bottom: 0.2rem; }
+    header p  { margin-top: 0; color: #555; }
+    nav { margin-top: 1rem; }
+    nav a { margin-right: 1rem; text-decoration: none; color: #0055aa; }
+    nav a:hover { text-decoration: underline; }
+    nav a.active { font-weight: 600; border-bottom: 2px solid #0055aa; }
+    main { max-width: 800px; margin: 0 auto; padding: 0 1rem 4rem; }
+    footer { max-width: 800px; margin: 2rem auto; padding: 0 1rem; font-size: 0.9rem; color: #666; }
+
+    /* ── Filter bar ── */
+    #filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0 2rem;
+    }
+    .filter-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 0.2rem 0.85rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: #555;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .filter-btn:hover { border-color: #0055aa; color: #0055aa; }
+    .filter-btn.active { background: #0055aa; color: #fff; border-color: #0055aa; }
+
+    /* ── Post cards ── */
+    #post-list { display: flex; flex-direction: column; gap: 0; }
+
+    .post-card {
+      display: block;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid #eee;
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-card:first-child { border-top: 1px solid #eee; }
+    .post-card:hover .post-title { color: #0055aa; }
+
+    .post-meta {
+      font-size: 0.8rem;
+      color: #999;
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .post-category {
+      display: inline-block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.1rem 0.5rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .cat-pesquisa  { background: #e8f0fb; color: #0055aa; }
+    .cat-resenha   { background: #fce8e8; color: #c62828; }
+    .cat-tutorial  { background: #e8f5e9; color: #2e7d32; }
+    .cat-ensaio    { background: #fff3e0; color: #e65100; }
+
+    .post-title {
+      font-size: 1.08rem;
+      font-weight: 600;
+      margin: 0 0 0.3rem;
+      transition: color 0.15s;
+    }
+    .post-summary {
+      font-size: 0.93rem;
+      color: #555;
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    #no-results { color: #999; font-size: 0.95rem; display: none; padding: 1rem 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><a href="index.html" style="text-decoration:none;color:inherit;">Guilherme Olímpio Fagundes</a></h1>
+  <p>Mestrando pelo Programa de Pós-Graduação em Sociologia da Universidade de São Paulo</p>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="index.html#research">Pesquisas</a>
+    <a href="index.html#publications">Publicações</a>
+    <a href="index.html#events">Eventos</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="index.html#cv">CV</a>
+    <a href="index.html#contact">Contato</a>
+  </nav>
+</header>
+
+<main>
+  <h2 style="margin-bottom:0.2rem;">Blog</h2>
+  <p style="color:#555;margin-top:0;font-size:0.95rem;">Reflexões, notas de pesquisa, resenhas e tutoriais.</p>
+
+  <div id="filter-bar">
+    <button class="filter-btn active" data-cat="all">Todos</button>
+    <button class="filter-btn" data-cat="pesquisa">Pesquisa</button>
+    <button class="filter-btn" data-cat="resenha">Resenha</button>
+    <button class="filter-btn" data-cat="ensaio">Ensaio</button>
+    <button class="filter-btn" data-cat="tutorial">Tutorial</button>
+  </div>
+
+  <div id="post-list"></div>
+  <p id="no-results">Nenhum post nesta categoria ainda.</p>
+</main>
+
+<footer><p>© 2026 Guilherme Olímpio Fagundes · <a href="blog.html">Blog</a></p></footer>
+
+<script>
+(async function () {
+
+  const LABELS = {
+    pesquisa: "Pesquisa",
+    resenha:  "Resenha",
+    tutorial: "Tutorial",
+    ensaio:   "Ensaio"
+  };
+
+  // Format date as "1 mar. 2026"
+  function fmtDate(iso) {
+    const [y, m, d] = iso.split("-").map(Number);
+    const months = ["jan.","fev.","mar.","abr.","mai.","jun.","jul.","ago.","set.","out.","nov.","dez."];
+    return `${d} ${months[m-1]} ${y}`;
+  }
+
+  // Load posts index
+  let posts = [];
+  try {
+    const res = await fetch("posts/posts.json");
+    posts = await res.json();
+    // Sort newest first
+    posts.sort((a, b) => b.date.localeCompare(a.date));
+  } catch (e) {
+    document.getElementById("post-list").innerHTML =
+      `<p style="color:#c00">Erro ao carregar posts. Verifique se <code>posts/posts.json</code> existe.</p>`;
+    return;
+  }
+
+  const list    = document.getElementById("post-list");
+  const noRes   = document.getElementById("no-results");
+  let activeCat = "all";
+
+  function renderPosts() {
+    const filtered = activeCat === "all" ? posts : posts.filter(p => p.category === activeCat);
+    list.innerHTML = "";
+    noRes.style.display = filtered.length === 0 ? "block" : "none";
+
+    filtered.forEach(p => {
+      const a = document.createElement("a");
+      a.className = "post-card";
+      a.href = `post.html?slug=${encodeURIComponent(p.slug)}`;
+      a.innerHTML = `
+        <div class="post-meta">
+          <span>${fmtDate(p.date)}</span>
+          <span class="post-category cat-${p.category}">${LABELS[p.category] || p.category}</span>
+        </div>
+        <p class="post-title">${p.title}</p>
+        <p class="post-summary">${p.summary}</p>
+      `;
+      list.appendChild(a);
+    });
+  }
+
+  // Filter buttons
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeCat = btn.dataset.cat;
+      renderPosts();
+    });
+  });
+
+  renderPosts();
+
+})();
+</script>
+
+</body>
+</html>
