@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <title>Guilherme Olímpio Fagundes</title>
   <style>
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 0; color: #222; background: #fff; line-height: 1.6; }
@@ -107,7 +110,7 @@
       <em>Primeiros Estudos: Revista de Ciências Sociais</em> (USP) entre 2022 a 2025. Tem interesse nos temas:
       estratificação social; sociologia econômica do desenvolvimento e das organizações; estudos sociais da
       ciência e tecnologia; metodologia e epistemologia.
-      E-mail: guilherme.olimpio@usp.br ou gui.olimpiofagundes@gmail.com
+      E-mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9bfceef2f7f3fee9f6feb5f4f7f2f6ebf2f4dbeee8ebb5f9e9">[email&#160;protected]</a> ou <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86e1f3efa8e9eaefebf6efe9e0e7e1f3e8e2e3f5c6e1ebe7efeaa8e5e9eb">[email&#160;protected]</a>
     </p>
   </section>
 
@@ -297,7 +300,7 @@
   <section id="contact">
     <h2>Contato</h2>
     <ul>
-      <li>Email: guilherme.olimpio@usp.br</li>
+      <li>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3453415d585c514659511a5b585d59445d5b744147441a5646">[email&#160;protected]</a></li>
       <li><a href="https://github.com/GuilhermeOlimpio">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/gofagundes/">LinkedIn</a></li>
     </ul>
@@ -307,7 +310,7 @@
 
 <footer><p>© 2026 Guilherme Olímpio Fagundes</p></footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   document.querySelectorAll(".tabs").forEach(tabGroup => {
     tabGroup.querySelectorAll(".tab-button").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -587,88 +590,23 @@
   // { name, type, year, location, lat, lng, description }
   // Tipos: "conferência" | "oficina" | "apresentação"
   const events = [
-  {
-    "name": "XXI Congresso Brasileiro de Sociologia",
-    "year": 2023,
-    "type": "conferência",
-    "location": "UFPA, Belém (PA), Brasil",
-    "lat": -1.4694826201381503,
-    "lng": -48.44655128839372,
-    "description": "Apresentação <<Seguindo políticas de cidades inteligentes>> no Sociólogos do Futuro."
-  },
-  {
-    "name": "Atelier Réseaux LEST",
-    "year": 2026,
-    "type": "oficina",
-    "location": "LEST, Aix-en-Provence, França",
-    "lat": 43.5297,
-    "lng": 5.4474,
-    "description": "Apresentação <<Les inégalités relationnelles parmi les entrepreneurs de start-up à São Paulo, Brésil>>. Discussão metodológica sobre redes."
-  },
-  {
-    "name": "XXII Congresso Brasileiro de Sociologia",
-    "year": 2025,
-    "type": "conferência",
-    "location": "USP, São Paulo (SP), Brasil",
-    "lat": -23.5642018520652,
-    "lng": -46.723804631201226,
-    "description": "Apresentação <<Contribuições da análise de redes para a sociologia das mobilidades>> no GT 11 sobre mobilidades e infraestruturas."
-  },
-  {
-    "name": "SemioTalks2",
-    "year": 2025,
-    "type": "oficina",
-    "location": "USP, São Paulo (SP), Brasil (online)",
-    "lat": -23.5642018520652,
-    "lng": -46.723804631201226,
-    "description": "Apresentação <<A Pesquisa em IA no Brasil>>. Com transmissão no Youtube."
-  }, 
-  {
-    "name": "32º SIICUSP",
-    "year": 2024,
-    "type": "conferência",
-    "location": "USP, São Paulo (SP), Brasil",
-    "lat": -23.5642018520652,
-    "lng": -46.723804631201226,
-    "description": "Apresentação <<Mapeamento da produção de conhecimento em Humanidades sobre IA (C4AI)>>."
-  }, 
-  {
-    "name": "Seminário Fluminense de Sociologia",
-    "year": 2025,
-    "type": "conferência",
-    "location": "UFF, Niterói (RJ), Brasil",
-    "lat": -22.901076777842743,  
-    "lng": -43.12980830049263,
-    "description": "Apresentação <<Empreendedorismo e redes pessoais: Como redes e trajetórias podem revelar iniquidades sociais em uma aceleradora?>> GT 7. Sociologia Econômica"
-  },
-  {
-    "name": "I Seminário Interno Mobilidades: Teoria, Temas e Métodos",
-    "year": 2023,
-    "type": "conferência",
-    "location": "USP, São Paulo (SP), Brasil",
-    "lat": -23.5642018520652,
-    "lng": -46.723804631201226,
-    "description": "Apresentação <<Sistemas de inovação on the move?>>"
-  }, 
-  {
-    "name": "Graduação em Foco",
-    "year": 2022,
-    "type": "conferência",
-    "location": "UFMG, Belo Horizonte (MG), Brasil (online)",
-    "lat": -23.5642018520652,
-    "lng": -46.723804631201226,
-    "description": "Apresentação <<Como o trabalho docente é experienciado na Educação 4.0?>>"
-  }, 
-  {
-    "name": "Ciclo de oficinas metodológicas do LAPS",
-    "year": 2026,
-    "type": "conferência",
-    "location": "USP, São Paulo (SP), Brasil",
-    "lat": -23.5642018520652,
-    "lng": -46.723804631201226,
-    "description": "Apresentação <<Análise de redes pessoais: teoria e método>>"
-  } 
-];
+    {
+      name: "Exemplo: Congresso Brasileiro de Sociologia",
+      type: "conferência",
+      year: 2025,
+      location: "São Paulo, Brasil",
+      lat: -23.5505, lng: -46.6333,
+      description: "Apresentação de trabalho."
+    },
+    {
+      name: "Exemplo: Workshop LEST/CNRS",
+      type: "oficina",
+      year: 2025,
+      location: "Aix-en-Provence, França",
+      lat: 43.5297, lng: 5.4474,
+      description: "Estágio de pesquisa."
+    }
+  ];
 
   const COLORS = { "conferência": "#0055aa", "oficina": "#2e7d32", "apresentação": "#c62828" };
 
@@ -687,19 +625,67 @@
     const o = document.createElement("option"); o.value = t; o.textContent = t.charAt(0).toUpperCase() + t.slice(1); typeSel.appendChild(o);
   });
 
-  let markers = [];
-  function renderMap() {
-    markers.forEach(m => map.removeLayer(m)); markers = [];
-    const yr = yearSel.value, tp = typeSel.value;
-    events.filter(e => (yr === "all" || String(e.year) === yr) && (tp === "all" || e.type === tp))
-      .forEach(e => {
-        const m = L.circleMarker([e.lat, e.lng], { radius: 7, fillColor: COLORS[e.type] || "#888", color: "#fff", weight: 1.5, fillOpacity: 0.9 }).addTo(map);
-        m.bindTooltip(e.name, { sticky: true });
-        m.bindPopup(`<strong>${e.name}</strong><br/><em>${e.type.charAt(0).toUpperCase()+e.type.slice(1)} &middot; ${e.year}</em><br/>${e.location}` + (e.description ? `<br/><span style="color:#555;font-size:0.9em">${e.description}</span>` : ""));
-        markers.push(m);
-      });
-    if (markers.length > 0) map.fitBounds(L.featureGroup(markers).getBounds().pad(0.3));
+  let clusterGroup = null;
+
+  function makeIcon(color) {
+    return L.divIcon({
+      className: "",
+      html: `<div style="width:14px;height:14px;border-radius:50%;background:${color};border:2px solid #fff;box-shadow:0 0 0 1px ${color}40"></div>`,
+      iconSize: [14, 14],
+      iconAnchor: [7, 7],
+      popupAnchor: [0, -10]
+    });
   }
+
+  function renderMap() {
+    if (clusterGroup) map.removeLayer(clusterGroup);
+    clusterGroup = L.markerClusterGroup({
+      maxClusterRadius: 40,
+      iconCreateFunction: function (cluster) {
+        const children = cluster.getAllChildMarkers();
+        const typeCounts = {};
+        children.forEach(m => {
+          const t = m.options._eventType || "outro";
+          typeCounts[t] = (typeCounts[t] || 0) + 1;
+        });
+        const dominant = Object.entries(typeCounts).sort((a,b) => b[1]-a[1])[0][0];
+        const bg = COLORS[dominant] || "#555";
+        const n  = cluster.getChildCount();
+        return L.divIcon({
+          className: "",
+          html: `<div style="width:32px;height:32px;border-radius:50%;background:${bg};border:2px solid #fff;box-shadow:0 0 0 1.5px ${bg};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;font-family:system-ui">${n}</div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        });
+      }
+    });
+
+    const yr = yearSel.value, tp = typeSel.value;
+    const filtered = events.filter(e =>
+      (yr === "all" || String(e.year) === yr) &&
+      (tp === "all" || e.type === tp)
+    );
+
+    filtered.forEach(e => {
+      const color = COLORS[e.type] || "#888";
+      const marker = L.marker([e.lat, e.lng], { icon: makeIcon(color), _eventType: e.type });
+      const typeLabel = e.type.charAt(0).toUpperCase() + e.type.slice(1);
+      marker.bindPopup(
+        `<strong>${e.name}</strong><br/>` +
+        `<em>${typeLabel} · ${e.year}</em><br/>` +
+        `${e.location}` +
+        (e.description ? `<br/><span style="color:#555;font-size:0.85em">${e.description}</span>` : ""),
+        { maxWidth: 240 }
+      );
+      clusterGroup.addLayer(marker);
+    });
+
+    map.addLayer(clusterGroup);
+    if (filtered.length > 0) {
+      map.fitBounds(clusterGroup.getBounds().pad(0.3));
+    }
+  }
+
   yearSel.addEventListener("change", renderMap);
   typeSel.addEventListener("change", renderMap);
   renderMap();
