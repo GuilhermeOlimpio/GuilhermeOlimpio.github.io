@@ -193,7 +193,17 @@
     // Configure marked
     marked.setOptions({ breaks: false, gfm: true });
 
-    document.getElementById("post-body").innerHTML = marked.parse(clean);
+    const postBody = document.getElementById("post-body");
+    postBody.innerHTML = marked.parse(clean);
+
+    // Fix image paths: .md files live in posts/ but images are relative to site root.
+    // Prepend ../ to any src that is not already absolute or root-relative.
+    postBody.querySelectorAll("img").forEach(img => {
+      const src = img.getAttribute("src");
+      if (src && !src.startsWith("http") && !src.startsWith("/") && !src.startsWith("..")) {
+        img.setAttribute("src", "../" + src);
+      }
+    });
     document.getElementById("loading").style.display = "none";
 
   } catch(e) {
