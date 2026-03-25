@@ -6,16 +6,16 @@
     "location": "UFPA, Belém (PA), Brasil",
     "lat": -1.4694826201381503,
     "lng": -48.44655128839372,
-    "description": "Apresentação <<Seguindo políticas de cidades inteligentes>> no Sociólogos do Futuro."
+    "description": "Seguindo políticas de cidades inteligentes, Sociólogos do Futuro."
   },
   {
     "name": "Atelier Réseaux LEST",
     "year": 2026,
     "type": "oficina",
     "location": "LEST, Aix-en-Provence, França",
-    "lat": 43.5297,
-    "lng": 5.4474,
-    "description": "Apresentação <<Les inégalités relationnelles parmi les entrepreneurs de start-up à São Paulo, Brésil>>. Discussão metodológica sobre redes."
+    "lat": 43.516610232657335,
+    "lng": 5.452650562402541,
+    "description": "Les inégalités relationnelles parmi les entrepreneurs de start-up à São Paulo, Brésil."
   },
   {
     "name": "XXII Congresso Brasileiro de Sociologia",
@@ -24,7 +24,7 @@
     "location": "USP, São Paulo (SP), Brasil",
     "lat": -23.5642018520652,
     "lng": -46.723804631201226,
-    "description": "Apresentação <<Contribuições da análise de redes para a sociologia das mobilidades>> no GT 11 sobre mobilidades e infraestruturas."
+    "description": "Contribuições da análise de redes para a sociologia das mobilidades, GT11 Mobilidades e Infraestruturas."
   },
   {
     "name": "SemioTalks2",
@@ -33,7 +33,7 @@
     "location": "USP, São Paulo (SP), Brasil (online)",
     "lat": -23.5642018520652,
     "lng": -46.723804631201226,
-    "description": "Apresentação <<A Pesquisa em IA no Brasil>>. Com transmissão no Youtube."
+    "description": "A pesquisa em IA no Brasil"
   }, 
   {
     "name": "32º SIICUSP",
@@ -42,7 +42,7 @@
     "location": "USP, São Paulo (SP), Brasil",
     "lat": -23.5642018520652,
     "lng": -46.723804631201226,
-    "description": "Apresentação <<Mapeamento da produção de conhecimento em Humanidades sobre IA (C4AI)>>."
+    "description": "Mapeamento da produção de conhecimento em Humanidades sobre IA (C4AI)."
   }, 
   {
     "name": "Seminário Fluminense de Sociologia",
@@ -51,7 +51,7 @@
     "location": "UFF, Niterói (RJ), Brasil",
     "lat": -22.901076777842743,  
     "lng": -43.12980830049263,
-    "description": "Apresentação <<Empreendedorismo e redes pessoais: Como redes e trajetórias podem revelar iniquidades sociais em uma aceleradora?>> GT 7. Sociologia Econômica"
+    "description": "Empreendedorismo e redes pessoais: Como redes e trajetórias podem revelar iniquidades sociais em uma aceleradora?, GT7 Sociologia Econômica"
   },
   {
     "name": "I Seminário Interno Mobilidades: Teoria, Temas e Métodos",
@@ -60,15 +60,15 @@
     "location": "USP, São Paulo (SP), Brasil",
     "lat": -23.5642018520652,
     "lng": -46.723804631201226,
-    "description": "Apresentação <<Sistemas de inovação on the move?>>"
+    "description": "Sistemas de inovação on the move?"
   }, 
   {
     "name": "Graduação em Foco",
     "year": 2022,
     "type": "conferência",
     "location": "UFMG, Belo Horizonte (MG), Brasil (online)",
-    "lat": -23.5642018520652,
-    "lng": -46.723804631201226,
+    "lat": -19.866829117237362,
+    "lng": -43.96156782128898,
     "description": "Apresentação <<Como o trabalho docente é experienciado na Educação 4.0?>>"
   }, 
   {
@@ -78,6 +78,6 @@
     "location": "USP, São Paulo (SP), Brasil",
     "lat": -23.5642018520652,
     "lng": -46.723804631201226,
-    "description": "Apresentação <<Análise de redes pessoais: teoria e método>>"
+    "description": "Análise de redes pessoais: teoria e método"
   } 
 ]
