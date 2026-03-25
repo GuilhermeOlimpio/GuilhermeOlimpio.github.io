@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "2026-03-01-redes-e-desigualdade",
+    "title": "Redes sociais e desigualdade: uma nota de pesquisa",
+    "date": "2026-03-01",
+    "category": "pesquisa",
+    "summary": "Reflexões sobre como a análise de redes pessoais pode revelar estruturas de desigualdade invisíveis nos mercados de trabalho de alta tecnologia."
+  },
+  {
+    "slug": "2026-02-10-resenha-paugam",
+    "title": "Resenha: Le lien social, de Serge Paugam",
+    "date": "2026-02-10",
+    "category": "resenha",
+    "summary": "Uma leitura do conceito de vínculo social em Paugam e sua utilidade para pensar a coesão em contextos de precarização do trabalho."
+  },
+  {
+    "slug": "2025-12-05-introducao-igraph-r",
+    "title": "Introdução à análise de redes com igraph no R",
+    "date": "2025-12-05",
+    "category": "tutorial",
+    "summary": "Tutorial passo a passo para construir, visualizar e calcular métricas básicas de redes pessoais usando o pacote igraph no R."
+  }
+]
