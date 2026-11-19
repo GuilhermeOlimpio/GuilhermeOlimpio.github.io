@@ -4,66 +4,75 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nuvens de palavras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Hanken+Grotesk:wght@500;700&display=swap">
 <style>
-/* Layout: uma coluna de cabeçalho curto e uma grade de quatro nuvens, uma por artigo. */
+/* Layout: cabeçalho em caixa-alta sobre fundo azul-marinho com padrão de linhas curvas; quatro quadros de bordas finas, um por artigo. */
 :root{
-  --bg:#f7f6f2; --card:#ffffff; --ink:#1d2128; --muted:#586272; --line:#dedbd2;
-  --c1:#1b4f72; --c2:#a04000; --c3:#1e6b52; --c4:#7d3c98; --c5:#7a5f00;
-  --tipbg:#1d2128; --tipfg:#f7f6f2;
+  --navy:#063067; --white:#ffffff; --amber:#ffbd59; --stone:#a7a299;
+  --line:rgba(255,255,255,.85);
+  --display:"Hanken Grotesk","Agrandir Tight Medium",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:Arapey,Georgia,"Times New Roman",serif;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#13161b; --card:#1b1f26; --ink:#e8e6e1; --muted:#a3a9b3; --line:#2c313a;
-    --c1:#6cb4e4; --c2:#f0a070; --c3:#6fd0a8; --c4:#c89be0; --c5:#e5c76b;
-    --tipbg:#e8e6e1; --tipfg:#13161b; color-scheme:dark;
-  }
+body{
+  background-color:var(--navy);
+  background-image:url("data:image/png;base64,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");
+  background-size:620px auto; background-repeat:repeat;
+  color:var(--white); font:500 17px/1.5 var(--display);
 }
-:root[data-theme="dark"]{
-  --bg:#13161b; --card:#1b1f26; --ink:#e8e6e1; --muted:#a3a9b3; --line:#2c313a;
-  --c1:#6cb4e4; --c2:#f0a070; --c3:#6fd0a8; --c4:#c89be0; --c5:#e5c76b;
-  --tipbg:#e8e6e1; --tipfg:#13161b; color-scheme:dark;
-}
-body{background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
-main{max-width:1100px;margin:0 auto;padding-block:24px 48px;
+main{max-width:1180px;margin:0 auto;padding-block:36px 56px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-h1{font-size:1.6rem;line-height:1.2;margin:0 0 6px;text-wrap:balance}
-p.sub{color:var(--muted);margin:0 0 20px;max-width:65ch}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:16px}
-figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0}
-figcaption{font-size:.85rem;color:var(--muted);margin-bottom:6px;overflow-wrap:anywhere}
+.eyebrow{font:500 .9rem/1.3 var(--display);letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}
+h1{font:700 clamp(2.2rem,7vw,4.4rem)/1 var(--display);letter-spacing:.02em;text-transform:uppercase;margin:0 0 18px;text-wrap:balance}
+p.sub{font:400 1.15rem/1.5 var(--serif);max-width:65ch;margin:0 0 26px;color:var(--white)}
+.key{display:flex;flex-wrap:wrap;gap:6px 22px;margin:0 0 22px;padding:0;list-style:none;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+.key li{display:flex;align-items:center;gap:8px}
+.key i{width:12px;height:12px;display:inline-block;background:var(--c)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:0;border:1px solid var(--line);border-width:1px 0 0 1px}
+figure{margin:0;padding:14px 14px 10px;min-width:0;border:1px solid var(--line);border-width:0 1px 1px 0}
+figcaption{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--stone);margin:0 0 6px;overflow-wrap:anywhere}
 canvas{width:100%;height:auto;display:block}
-.tip{position:fixed;pointer-events:none;background:var(--tipbg);color:var(--tipfg);padding:4px 8px;border-radius:6px;font-size:.85rem}
+.tip{position:fixed;pointer-events:none;background:var(--amber);color:var(--navy);font-weight:700;padding:4px 10px;font-size:.85rem;letter-spacing:.04em}
 .tip[hidden]{display:none}
 </style>
 </head>
 <body>
 <main>
+<p class="eyebrow">Tempo Social · Folha de S.Paulo · 2026</p>
 <h1>Palavras mais frequentes</h1>
-<p class="sub">Quatro textos analisados: dois artigos da revista Tempo Social (v. 38, n. 2, 2026) e duas matérias da Folha de S.Paulo (novembro de 2026). O tamanho de cada palavra é proporcional ao número de ocorrências no próprio texto. Palavras funcionais e referências bibliográficas ficaram de fora. Passe o mouse sobre uma palavra para ver a contagem.</p>
+<p class="sub">Quatro textos analisados: dois artigos da revista Tempo Social (v. 38, n. 2) e duas matérias da Folha de S.Paulo, de novembro. O tamanho de cada palavra é proporcional ao número de ocorrências no próprio texto. Palavras funcionais e referências bibliográficas ficaram de fora. Passe o mouse sobre uma palavra para ver a contagem.</p>
+<ul class="key" aria-label="Legenda de cores">
+  <li style="--c:var(--amber)"><i></i>3 mais frequentes</li>
+  <li style="--c:var(--white)"><i></i>4º ao 20º lugar</li>
+  <li style="--c:var(--stone)"><i></i>demais</li>
+</ul>
 <div class="grid" id="grid"></div>
 </main>
 <div class="tip" id="tip" hidden></div>
 <script>
-const DATA = [{"arquivo":"Folha_2026-11_Guerrilha-digital-janonismo.md","palavras":[["janones",10],["minimanual",9],["campo",5],["canal",5],["deputado",5],["lula",5],["manual",5],["possível",5],["redes",5],["ribeiro",5],["digital",4],["psicanalista",4],["adversário",3],["autores",3],["campanha",3],["comunicação",3],["conteúdo",3],["esquerda",3],["estado",3],["exército",3],["grupo",3],["iago",3],["informacional",3],["insurgência",3],["janonismo",3],["mobilização",3],["neckel",3],["publicado",3],["publicação",3],["realidade",3],["afirmou",2],["alcance",2],["anything",2],["apropriação",2],["ações",2],["brasil",2],["canadense",2],["combate",2],["contas",2],["descritas",2]],"titulo":"Folha · 2026 11 · Guerrilha digital janonismo"},{"arquivo":"Folha_2026-11_Medeiros_Diversidade-mercado-editorial.md","palavras":[["história",6],["literatura",6],["mercado",5],["negra",5],["conversa",4],["ilustríssima",4],["medeiros",4],["podcast",4],["autores",3],["brasileiro",3],["diversidade",3],["editorial",3],["entrevista",3],["fala",3],["ilusões",3],["mário",3],["negros",3],["pesquisador",3],["anos",2],["aplicativos",2],["artistas",2],["autor",2],["autoras",2],["autoria",2],["brasil",2],["capitalista",2],["cientista",2],["comercial",2],["consagração",2],["disponível",2],["episódios",2],["estrela",2],["grandes",2],["intelectuais",2],["livros",2],["modernidade",2],["mostra",2],["novo",2],["obra",2],["político",2]],"titulo":"Folha · 2026 11 · Medeiros · Diversidade mercado editorial"},{"arquivo":"TempoSocial_2026_Massella_Punicao-tradicao-durkheimiana.pdf","palavras":[["responsabilidade",181],["fauconnet",113],["durkheim",83],["crime",62],["moral",56],["pena",49],["sociedade",42],["indivíduo",38],["coletiva",37],["punição",36],["juízo",34],["individualismo",31],["representação",28],["noção",25],["social",25],["individual",23],["penal",22],["durkheimiana",21],["morais",21],["relação",19],["autor",17],["criminoso",17],["representações",17],["interpretação",16],["tema",16],["grupo",15],["instituição",15],["respeito",15],["sociais",15],["trabalho",15],["tradição",15],["consciência",14],["sanção",14],["ação",13],["condições",13],["estudo",13],["novas",13],["regra",13],["sentimentos",13],["alexandre",12]],"titulo":"TempoSocial · 2026 · Massella · Punicao tradicao durkheimiana"},{"arquivo":"TempoSocial_2026_Miguel_Polarizacao-politica.pdf","palavras":[["polarização",77],["política",65],["público",20],["valores",19],["brasil",17],["grupos",16],["políticas",16],["debate",15],["democracia",15],["esquerda",15],["miguel",15],["partido",15],["pessoas",15],["disputa",14],["direita",13],["dois",13],["literatura",13],["plataformas",13],["social",13],["conflito",12],["estudos",12],["fato",12],["felipe",12],["posições",12],["ciência",11],["coisa",11],["grupo",11],["luis",11],["nome",11],["político",11],["comportamento",10],["extrema-direita",10],["políticos",10],["sociais",10],["discurso",9],["eleições",9],["partir",9],["possível",9],["presidenciais",9],["adversários",8]],"titulo":"TempoSocial · 2026 · Miguel · Polarizacao politica"}];
+const DATA = [{"arquivo":"TempoSocial_2026_Miguel_Polarizacao-politica.pdf","palavras":[["polarização",77],["política",65],["público",20],["valores",19],["brasil",17],["grupos",16],["políticas",16],["debate",15],["democracia",15],["esquerda",15],["miguel",15],["partido",15],["pessoas",15],["disputa",14],["direita",13],["dois",13],["literatura",13],["plataformas",13],["social",13],["conflito",12],["estudos",12],["fato",12],["felipe",12],["posições",12],["ciência",11],["coisa",11],["grupo",11],["luis",11],["nome",11],["político",11],["comportamento",10],["extrema-direita",10],["políticos",10],["sociais",10],["discurso",9],["eleições",9],["partir",9],["possível",9],["presidenciais",9],["adversários",8]],"titulo":"Tempo Social · Miguel · Polarização política: o nome e a coisa"},{"arquivo":"TempoSocial_2026_Massella_Punicao-tradicao-durkheimiana.pdf","palavras":[["responsabilidade",181],["fauconnet",113],["durkheim",83],["crime",62],["moral",56],["pena",49],["sociedade",42],["indivíduo",38],["coletiva",37],["punição",36],["juízo",34],["individualismo",31],["representação",28],["noção",25],["social",25],["individual",23],["penal",22],["durkheimiana",21],["morais",21],["relação",19],["autor",17],["criminoso",17],["representações",17],["interpretação",16],["tema",16],["grupo",15],["instituição",15],["respeito",15],["sociais",15],["trabalho",15],["tradição",15],["consciência",14],["sanção",14],["ação",13],["condições",13],["estudo",13],["novas",13],["regra",13],["sentimentos",13],["alexandre",12]],"titulo":"Tempo Social · Massella · Punição e responsabilidade na tradição durkheimiana"},{"arquivo":"Folha_2026-11_Guerrilha-digital-janonismo.md","palavras":[["janones",10],["minimanual",9],["campo",5],["canal",5],["deputado",5],["lula",5],["manual",5],["possível",5],["redes",5],["ribeiro",5],["digital",4],["psicanalista",4],["adversário",3],["autores",3],["campanha",3],["comunicação",3],["conteúdo",3],["esquerda",3],["estado",3],["exército",3],["grupo",3],["iago",3],["informacional",3],["insurgência",3],["janonismo",3],["mobilização",3],["neckel",3],["publicado",3],["publicação",3],["realidade",3],["afirmou",2],["alcance",2],["anything",2],["apropriação",2],["ações",2],["brasil",2],["canadense",2],["combate",2],["contas",2],["descritas",2]],"titulo":"Folha de S.Paulo · Guerrilha digital espalha o janonismo pelo mundo"},{"arquivo":"Folha_2026-11_Medeiros_Diversidade-mercado-editorial.md","palavras":[["história",6],["literatura",6],["mercado",5],["negra",5],["conversa",4],["ilustríssima",4],["medeiros",4],["podcast",4],["autores",3],["brasileiro",3],["diversidade",3],["editorial",3],["entrevista",3],["fala",3],["ilusões",3],["mário",3],["negros",3],["pesquisador",3],["anos",2],["aplicativos",2],["artistas",2],["autor",2],["autoras",2],["autoria",2],["brasil",2],["capitalista",2],["cientista",2],["comercial",2],["consagração",2],["disponível",2],["episódios",2],["estrela",2],["grandes",2],["intelectuais",2],["livros",2],["modernidade",2],["mostra",2],["novo",2],["obra",2],["político",2]],"titulo":"Folha de S.Paulo · Diversidade no mercado editorial, com Mário Medeiros"}];
 const W = 960, H = 600;
+const FONT = '"Hanken Grotesk","Agrandir Tight Medium",system-ui,-apple-system,"Segoe UI",sans-serif';
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
 function layout(words, ctx) {
   const max = words[0][1], min = words[words.length-1][1];
   const placed = [];
   const cx = W/2, cy = H/2;
-  const font = "system-ui, -apple-system, 'Segoe UI', sans-serif";
   words.forEach(([text, n], i) => {
+    const label = text.toUpperCase();
     const t = max === min ? 1 : (Math.sqrt(n) - Math.sqrt(min)) / (Math.sqrt(max) - Math.sqrt(min));
-    let size = 20 + t * 80;
+    let size = 20 + t * 70;
     for (let tries = 0; tries < 6; tries++, size *= 0.9) {
-      ctx.font = `600 ${size}px ${font}`;
-      const w = ctx.measureText(text).width + 8, h = size * 1.05;
+      ctx.font = `700 ${size}px ${FONT}`;
+      const w = ctx.measureText(label).width + 10, h = size * 1.05;
       for (let a = 0, r = 0; r < Math.max(W, H); a += 0.35, r += 0.9) {
         const x = cx + r * 1.5 * Math.cos(a) - w/2, y = cy + r * Math.sin(a) - h/2;
         if (x < 4 || y < 4 || x + w > W - 4 || y + h > H - 4) continue;
         if (placed.every(p => x + w < p.x || p.x + p.w < x || y + h < p.y || p.y + p.h < y)) {
-          placed.push({text, n, x, y, w, h, size, i}); return;
+          placed.push({text, label, n, x, y, w, h, size, i}); return;
         }
       }
     }
@@ -77,41 +86,42 @@ function draw(canvas, placed) {
   const ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, W, H);
-  const cols = ['--c1','--c2','--c3','--c4','--c5'].map(css);
+  const amber = css('--amber'), white = css('--white'), stone = css('--stone');
   ctx.textBaseline = 'middle';
   placed.forEach(p => {
-    ctx.font = `600 ${p.size}px system-ui, -apple-system, 'Segoe UI', sans-serif`;
-    ctx.fillStyle = cols[p.i % cols.length];
-    ctx.fillText(p.text, p.x + 4, p.y + p.h/2);
+    ctx.font = `700 ${p.size}px ${FONT}`;
+    ctx.fillStyle = p.i < 3 ? amber : p.i < 20 ? white : stone;
+    ctx.fillText(p.label, p.x + 5, p.y + p.h/2);
   });
 }
 
 const tip = document.getElementById('tip');
-const state = [];
-DATA.forEach(d => {
-  const fig = document.createElement('figure');
-  const cap = document.createElement('figcaption'); cap.textContent = d.titulo;
-  const cv = document.createElement('canvas');
-  cv.setAttribute('role', 'img');
-  cv.setAttribute('aria-label', 'Nuvem de palavras de ' + d.titulo + '. Mais frequentes: ' + d.palavras.slice(0, 8).map(p => p[0] + ' (' + p[1] + ')').join(', '));
-  fig.append(cap, cv); document.getElementById('grid').append(fig);
-  const ctx = cv.getContext('2d');
-  const placed = layout(d.palavras, ctx);
-  state.push({cv, placed});
-  cv.addEventListener('mousemove', e => {
-    const r = cv.getBoundingClientRect(), k = W / r.width;
-    const x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k;
-    const hit = placed.find(p => x >= p.x && x <= p.x + p.w && y >= p.y && y <= p.y + p.h);
-    if (hit) { tip.textContent = hit.text + ': ' + hit.n + ' ocorrências'; tip.hidden = false;
-      tip.style.left = (e.clientX + 12) + 'px'; tip.style.top = (e.clientY + 12) + 'px'; }
-    else tip.hidden = true;
+function build() {
+  DATA.forEach(d => {
+    const fig = document.createElement('figure');
+    const cap = document.createElement('figcaption'); cap.textContent = d.titulo;
+    const cv = document.createElement('canvas');
+    cv.setAttribute('role', 'img');
+    cv.setAttribute('aria-label', 'Nuvem de palavras de ' + d.titulo + '. Mais frequentes: ' + d.palavras.slice(0, 8).map(p => p[0] + ' (' + p[1] + ')').join(', '));
+    fig.append(cap, cv); document.getElementById('grid').append(fig);
+    const placed = layout(d.palavras, cv.getContext('2d'));
+    draw(cv, placed);
+    cv.addEventListener('mousemove', e => {
+      const r = cv.getBoundingClientRect(), k = W / r.width;
+      const x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k;
+      const hit = placed.find(p => x >= p.x && x <= p.x + p.w && y >= p.y && y <= p.y + p.h);
+      if (hit) { tip.textContent = hit.label + ' · ' + hit.n + (hit.n === 1 ? ' ocorrência' : ' ocorrências'); tip.hidden = false;
+        tip.style.left = (e.clientX + 12) + 'px'; tip.style.top = (e.clientY + 12) + 'px'; }
+      else tip.hidden = true;
+    });
+    cv.addEventListener('mouseleave', () => tip.hidden = true);
   });
-  cv.addEventListener('mouseleave', () => tip.hidden = true);
-});
-const redraw = () => state.forEach(s => draw(s.cv, s.placed));
-redraw();
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redraw);
-new MutationObserver(redraw).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
+}
+// Espera as fontes carregarem para medir as palavras com a tipografia certa (máx. 2,5 s).
+const fontsReady = (document.fonts && document.fonts.load)
+  ? Promise.race([document.fonts.load('700 40px "Hanken Grotesk"'), new Promise(r => setTimeout(r, 2500))])
+  : Promise.resolve();
+fontsReady.catch(() => {}).then(build);
 </script>
 
 </body>
