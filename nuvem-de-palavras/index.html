@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuvens de palavras</title>
+<style>
+/* Layout: uma coluna de cabeçalho curto e uma grade de quatro nuvens, uma por artigo. */
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --ink:#1d2128; --muted:#586272; --line:#dedbd2;
+  --c1:#1b4f72; --c2:#a04000; --c3:#1e6b52; --c4:#7d3c98; --c5:#7a5f00;
+  --tipbg:#1d2128; --tipfg:#f7f6f2;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#13161b; --card:#1b1f26; --ink:#e8e6e1; --muted:#a3a9b3; --line:#2c313a;
+    --c1:#6cb4e4; --c2:#f0a070; --c3:#6fd0a8; --c4:#c89be0; --c5:#e5c76b;
+    --tipbg:#e8e6e1; --tipfg:#13161b; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13161b; --card:#1b1f26; --ink:#e8e6e1; --muted:#a3a9b3; --line:#2c313a;
+  --c1:#6cb4e4; --c2:#f0a070; --c3:#6fd0a8; --c4:#c89be0; --c5:#e5c76b;
+  --tipbg:#e8e6e1; --tipfg:#13161b; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1100px;margin:0 auto;padding-block:24px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-size:1.6rem;line-height:1.2;margin:0 0 6px;text-wrap:balance}
+p.sub{color:var(--muted);margin:0 0 20px;max-width:65ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:16px}
+figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0}
+figcaption{font-size:.85rem;color:var(--muted);margin-bottom:6px;overflow-wrap:anywhere}
+canvas{width:100%;height:auto;display:block}
+.tip{position:fixed;pointer-events:none;background:var(--tipbg);color:var(--tipfg);padding:4px 8px;border-radius:6px;font-size:.85rem}
+.tip[hidden]{display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>Palavras mais frequentes</h1>
+<p class="sub">Quatro textos analisados: dois artigos da revista Tempo Social (v. 38, n. 2, 2026) e duas matérias da Folha de S.Paulo (novembro de 2026). O tamanho de cada palavra é proporcional ao número de ocorrências no próprio texto. Palavras funcionais e referências bibliográficas ficaram de fora. Passe o mouse sobre uma palavra para ver a contagem.</p>
+<div class="grid" id="grid"></div>
+</main>
+<div class="tip" id="tip" hidden></div>
+<script>
+const DATA = [{"arquivo":"Folha_2026-11_Guerrilha-digital-janonismo.md","palavras":[["janones",10],["minimanual",9],["campo",5],["canal",5],["deputado",5],["lula",5],["manual",5],["possível",5],["redes",5],["ribeiro",5],["digital",4],["psicanalista",4],["adversário",3],["autores",3],["campanha",3],["comunicação",3],["conteúdo",3],["esquerda",3],["estado",3],["exército",3],["grupo",3],["iago",3],["informacional",3],["insurgência",3],["janonismo",3],["mobilização",3],["neckel",3],["publicado",3],["publicação",3],["realidade",3],["afirmou",2],["alcance",2],["anything",2],["apropriação",2],["ações",2],["brasil",2],["canadense",2],["combate",2],["contas",2],["descritas",2]],"titulo":"Folha · 2026 11 · Guerrilha digital janonismo"},{"arquivo":"Folha_2026-11_Medeiros_Diversidade-mercado-editorial.md","palavras":[["história",6],["literatura",6],["mercado",5],["negra",5],["conversa",4],["ilustríssima",4],["medeiros",4],["podcast",4],["autores",3],["brasileiro",3],["diversidade",3],["editorial",3],["entrevista",3],["fala",3],["ilusões",3],["mário",3],["negros",3],["pesquisador",3],["anos",2],["aplicativos",2],["artistas",2],["autor",2],["autoras",2],["autoria",2],["brasil",2],["capitalista",2],["cientista",2],["comercial",2],["consagração",2],["disponível",2],["episódios",2],["estrela",2],["grandes",2],["intelectuais",2],["livros",2],["modernidade",2],["mostra",2],["novo",2],["obra",2],["político",2]],"titulo":"Folha · 2026 11 · Medeiros · Diversidade mercado editorial"},{"arquivo":"TempoSocial_2026_Massella_Punicao-tradicao-durkheimiana.pdf","palavras":[["responsabilidade",181],["fauconnet",113],["durkheim",83],["crime",62],["moral",56],["pena",49],["sociedade",42],["indivíduo",38],["coletiva",37],["punição",36],["juízo",34],["individualismo",31],["representação",28],["noção",25],["social",25],["individual",23],["penal",22],["durkheimiana",21],["morais",21],["relação",19],["autor",17],["criminoso",17],["representações",17],["interpretação",16],["tema",16],["grupo",15],["instituição",15],["respeito",15],["sociais",15],["trabalho",15],["tradição",15],["consciência",14],["sanção",14],["ação",13],["condições",13],["estudo",13],["novas",13],["regra",13],["sentimentos",13],["alexandre",12]],"titulo":"TempoSocial · 2026 · Massella · Punicao tradicao durkheimiana"},{"arquivo":"TempoSocial_2026_Miguel_Polarizacao-politica.pdf","palavras":[["polarização",77],["política",65],["público",20],["valores",19],["brasil",17],["grupos",16],["políticas",16],["debate",15],["democracia",15],["esquerda",15],["miguel",15],["partido",15],["pessoas",15],["disputa",14],["direita",13],["dois",13],["literatura",13],["plataformas",13],["social",13],["conflito",12],["estudos",12],["fato",12],["felipe",12],["posições",12],["ciência",11],["coisa",11],["grupo",11],["luis",11],["nome",11],["político",11],["comportamento",10],["extrema-direita",10],["políticos",10],["sociais",10],["discurso",9],["eleições",9],["partir",9],["possível",9],["presidenciais",9],["adversários",8]],"titulo":"TempoSocial · 2026 · Miguel · Polarizacao politica"}];
+const W = 960, H = 600;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+function layout(words, ctx) {
+  const max = words[0][1], min = words[words.length-1][1];
+  const placed = [];
+  const cx = W/2, cy = H/2;
+  const font = "system-ui, -apple-system, 'Segoe UI', sans-serif";
+  words.forEach(([text, n], i) => {
+    const t = max === min ? 1 : (Math.sqrt(n) - Math.sqrt(min)) / (Math.sqrt(max) - Math.sqrt(min));
+    let size = 20 + t * 80;
+    for (let tries = 0; tries < 6; tries++, size *= 0.9) {
+      ctx.font = `600 ${size}px ${font}`;
+      const w = ctx.measureText(text).width + 8, h = size * 1.05;
+      for (let a = 0, r = 0; r < Math.max(W, H); a += 0.35, r += 0.9) {
+        const x = cx + r * 1.5 * Math.cos(a) - w/2, y = cy + r * Math.sin(a) - h/2;
+        if (x < 4 || y < 4 || x + w > W - 4 || y + h > H - 4) continue;
+        if (placed.every(p => x + w < p.x || p.x + p.w < x || y + h < p.y || p.y + p.h < y)) {
+          placed.push({text, n, x, y, w, h, size, i}); return;
+        }
+      }
+    }
+  });
+  return placed;
+}
+
+function draw(canvas, placed) {
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+  const cols = ['--c1','--c2','--c3','--c4','--c5'].map(css);
+  ctx.textBaseline = 'middle';
+  placed.forEach(p => {
+    ctx.font = `600 ${p.size}px system-ui, -apple-system, 'Segoe UI', sans-serif`;
+    ctx.fillStyle = cols[p.i % cols.length];
+    ctx.fillText(p.text, p.x + 4, p.y + p.h/2);
+  });
+}
+
+const tip = document.getElementById('tip');
+const state = [];
+DATA.forEach(d => {
+  const fig = document.createElement('figure');
+  const cap = document.createElement('figcaption'); cap.textContent = d.titulo;
+  const cv = document.createElement('canvas');
+  cv.setAttribute('role', 'img');
+  cv.setAttribute('aria-label', 'Nuvem de palavras de ' + d.titulo + '. Mais frequentes: ' + d.palavras.slice(0, 8).map(p => p[0] + ' (' + p[1] + ')').join(', '));
+  fig.append(cap, cv); document.getElementById('grid').append(fig);
+  const ctx = cv.getContext('2d');
+  const placed = layout(d.palavras, ctx);
+  state.push({cv, placed});
+  cv.addEventListener('mousemove', e => {
+    const r = cv.getBoundingClientRect(), k = W / r.width;
+    const x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k;
+    const hit = placed.find(p => x >= p.x && x <= p.x + p.w && y >= p.y && y <= p.y + p.h);
+    if (hit) { tip.textContent = hit.text + ': ' + hit.n + ' ocorrências'; tip.hidden = false;
+      tip.style.left = (e.clientX + 12) + 'px'; tip.style.top = (e.clientY + 12) + 'px'; }
+    else tip.hidden = true;
+  });
+  cv.addEventListener('mouseleave', () => tip.hidden = true);
+});
+const redraw = () => state.forEach(s => draw(s.cv, s.placed));
+redraw();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redraw);
+new MutationObserver(redraw).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
+</script>
+
+</body>
+</html>
